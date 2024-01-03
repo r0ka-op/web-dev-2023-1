@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Название вашего сайта</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css  ">
+    <style>
+        /* Добавьте свои стили здесь */
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="bg-primary text-white text-center py-3">
+        <div class="container">
+            <img src="http://placehold.it/50x50/" alt="Логотип" class="img-fluid">
+            <h1>Логотип</h1>
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand" href="#">Главная</a>
+                <a class="navbar-brand" href="#">Личный кабинет</a>
+            </nav>
+        </div>
+    </header>
+    <!-- Шапка сайта 2 -->
+    <!-- <header class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Логотип</a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Личный кабинет</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header> -->
+
+    <!-- Область для всплывающих уведомлений -->
+    <div class="container mt-3" id="alerts">
+        <div class="alert alert-info" role="alert">
+            Важное уведомление!
+        </div>
+    </div>
+
+    <!-- Блок с изображением и описанием компании -->
+    <div class="container mt-3" id="description">
+        <div class="row">
+            <div class="col-md-6" id="">
+                <img src="http://placehold.it/400x400/" alt="Изображение компании" class="img-fluid">
+            </div>
+            <div class="col-md-6" id="">
+                <h2>Название компании</h2>
+                <p>Описание компании и её деятельности.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок с информацией о достоинствах компании -->
+    <div class="container mt-3" id="advantages">
+        <div class="row">
+            <div class="col-md-4" id="ad-title">
+                <h3>Заголовок</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm" id="ad1">
+                
+            </div>
+            <div class="col-sm" id="ad2">
+                
+            </div>
+            <div class="col-sm" id="ad3">
+                
+            </div>
+            <div class="col-sm" id="ad4">
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm" id="ad5">
+                
+            </div>
+            <div class="col-sm" id="ad6">
+                
+            </div>
+            <div class="col-sm" id="ad7">
+                
+            </div>
+            <div class="col-sm" id="ad8">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок с данными о пешеходных маршрутах города Москвы -->
+    <div class="container mt-3" id="routes">
+        <div class="row">
+            <div class="col-md-4" id="route-title">
+                <h2>Список пешеходных мрашрутов</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма для поиска маршрутов -->
+    <div class="container mt-3" id="routes-form">
+        <form>
+            <div class="row">
+                <div class="col-md-4" id="route-search">
+                    <label class="sr-only" for="routeName">Название маршрута</label>
+                    <input type="text" class="form-control mb-2" id="routeName" placeholder="Введите название маршрута">
+                </div>
+                <div class="col-md-4" id="route-list">
+                    <label for="landmark"></label>
+                    <select class="form-control" id="landmark">
+                        <option value="" disabled selected>Поиск по достопримечательности</option>  
+                        <option value="landmark1">Достопримечательность 1</option>
+                        <option value="landmark2">Достопримечательность 2</option>
+                        <!-- Добавьте свои варианты достопримечательностей -->
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm" id="route-table">
+                    <table>
+                        <tr><td>Название</td><td>Описание</td><td>Основные объекты</td><td></td></tr>
+                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
+                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
+                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
+                        
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Навигационная панель (пагинация) -->
+    <div class="container mt-3" id="pagination">
+        <!-- Ваш код здесь -->
+    </div>
+
+    <!-- Блок со списком доступных гидов -->
+    <div class="container mt-3" id="guides-list">
+        <!-- Ваш код здесь -->
+    </div>
+
+    <!-- Блок с кнопкой "Оформить заявку" -->
+    <div class="container mt-3" id="btn">
+        <!-- Ваш код здесь -->
+    </div>
+
+    <!-- Форма для поиска гидов -->
+    <div class="container mt-3" id="guides-form">
+        <!-- Ваш код здесь -->
+    </div>
+
+    <!-- Футер -->
+    <footer class="bg-light text-center py-3 mt-3">
+        <div class="container">
+            <p>Контактные данные</p>
+        </div>
+    </footer>
+
+    <!-- Подключение Bootstrap JS (необходим для работы модальных окон и других компонентов) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

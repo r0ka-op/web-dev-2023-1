@@ -1,0 +1,73 @@
+h3 {
+    text-align: center;
+}
+
+#ad-title {
+    margin: auto;
+}
+
+#description {
+    background: rgb(0, 255, 208);
+}
+
+#advantages {
+    /* width: 263px;
+    height: 393px; */
+    background: red;
+}
+#ad1, #ad2, #ad3, #ad4, #ad5, #ad6, #ad7, #ad8 {
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    background: rgb(187, 0, 255);
+}
+
+#routes {
+    background: rgb(157, 255, 0);
+}
+
+#route-title {
+    width: auto;
+}
+
+#route-search, #route-list {
+    background: red;
+}
+
+#landmark {
+    width: auto;
+}
+
+#route-table {
+    margin: auto;
+    background: red;
+}
+
+#routes-form {
+    background: rgb(0, 102, 255);
+}
+
+#pagination {
+    width: 263px;
+    height: 393px;
+    background: rgb(153, 0, 255);
+}
+
+#guides-list {
+    width: 263px;
+    height: 393px;
+    background: rgb(255, 0, 111);
+}
+
+#btn {
+    width: 263px;
+    height: 393px;
+    background: rgb(0, 255, 162);
+}
+
+#guides-form {
+    width: 263px;
+    height: 393px;
+    background: rgb(212, 255, 0);
+}
+
