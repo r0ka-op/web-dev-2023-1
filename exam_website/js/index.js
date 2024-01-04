@@ -37,6 +37,35 @@ document.getElementById('confirm-cancel-btn').addEventListener('click', function
 });
 
 
+// Обработчик на кнопку "Просмотреть заявку"
+document.getElementById('view-order-btn').addEventListener('click', function() {
+    var orderForm = document.getElementById('order-form');
+    var routeName = orderForm.elements['routeName'].value;
+    var guideName = orderForm.elements['guideName'].value;
+    var excursionDate = orderForm.elements['excursionDate'].value;
+    var excursionTime = orderForm.elements['excursionTime'].value;
+    // Нужно добавить другие данные
+
+    // Нужно добавить текст
+    var orderDetailsText = `
+        <p><strong>Маршрут:</strong> ${routeName}</p>
+        <p><strong>Гид:</strong> ${guideName}</p>
+        <p><strong>Дата экскурсии:</strong> ${excursionDate}</p>
+        <p><strong>Время начала:</strong> ${excursionTime}</p>
+        <!-- Добавьте другие данные по мере необходимости -->
+    `;
+
+    document.getElementById('order-details').innerHTML = orderDetailsText;
+
+    document.getElementById('view-order-modal').classList.add('open');
+});
+
+// Обработчик на кнопки "Закрыть" в модальном окне просмотра заявки
+document.getElementById('close-view-order-btn').addEventListener('click', function() {
+    document.getElementById('view-order-modal').classList.remove('open');
+});
+
+
 document.addEventListener('DOMContentLoaded', function () {
         // Ваши переменные для элементов формы
         var excursionDurationSelect = document.getElementById('excursionDuration');
