@@ -105,16 +105,18 @@
     </div>
 
     <!-- Блок с данными о пешеходных маршрутах города Москвы -->
-    <div class="container mt-3" id="routes">
-        <div class="row">
-            <div class="col-md-4" id="route-title">
-                <h2>Список пешеходных мрашрутов</h2>
-            </div>
-        </div>
-    </div>
+    <!-- <div class="container mt-3" id="routes">
+       
+    </div> -->
 
     <!-- Форма для поиска маршрутов -->
     <div class="container mt-3" id="routes-form">
+        <div class="row">
+            <div class="col-auto" id="route-title">
+                <h4>Список пешеходных мрашрутов</h4>
+            </div>
+        </div>
+
         <form>
             <div class="row">
                 <div class="col-md-4" id="route-search">
@@ -131,23 +133,60 @@
                     </select>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-sm" id="route-table">
-                    <table>
-                        <tr><td>Название</td><td>Описание</td><td>Основные объекты</td><td></td></tr>
-                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
-                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
-                        <tr><td>Название</td><td>Описание</td><td>объект, объект</td><td><button>Выбрать</button></td></tr>
-                        
+                    <table class="table table-bordered table-hover table-rounded">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Описание</th>
+                                <th scope="col">Основные объекты</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Название</td>
+                                <td>Описание</td>
+                                <td>объект, объект</td>
+                                <td><button class="btn btn-primary">Выбрать</button></td>
+                            </tr>
+                            <tr>
+                                <td>Название</td>
+                                <td>Описание</td>
+                                <td>объект, объект</td>
+                                <td><button class="btn btn-primary">Выбрать</button></td>
+                            </tr>
+                            <tr>
+                                <td>Название</td>
+                                <td>Описание</td>
+                                <td>объект, объект</td>
+                                <td><button class="btn btn-primary">Выбрать</button></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
-            </div>
+            </div>                       
         </form>
-    </div>
 
-    <!-- Навигационная панель (пагинация) -->
-    <div class="container mt-3" id="pagination">
-        <!-- Ваш код здесь -->
+        <div class="row">
+            <div class="col-md-12" id="pagination">
+                <nav aria-label="page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span class="arrow-left">➜</span></a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">➜</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 
     <!-- Блок со списком доступных гидов -->
@@ -155,14 +194,36 @@
         <!-- Ваш код здесь -->
     </div>
 
-    <!-- Блок с кнопкой "Оформить заявку" -->
-    <div class="container mt-3" id="btn">
-        <!-- Ваш код здесь -->
-    </div>
-
     <!-- Форма для поиска гидов -->
     <div class="container mt-3" id="guides-form">
         <!-- Ваш код здесь -->
+    </div>
+
+    <!-- Блок с кнопкой "Оформить заявку" -->
+    <div class="container mt-3" id="btn">
+        <button id="open-modal-btn">Открыть модальное окно</button>
+        <div class="modal" id="my-modal">
+            <div class="modal__box">
+                <button class="modal__close-btn" id="close-my-modal-btn">
+                    <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
+                            fill="#333333" />
+                        <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
+                    </svg>
+                </button>
+                <h2>Мое модальное окно</h2>
+    
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi, obcaecati, vero, illum ipsa libero labore facilis quo iste numquam deserunt totam reprehenderit quod.</p>
+    
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae impedit at, beatae consectetur asperiores maiores? Veniam impedit doloribus hic, dolorum odio totam rerum excepturi dolor! Veniam molestiae voluptas obcaecati non natus quae corporis,
+                    cum deleniti quo, cumque culpa exercitationem ex at numquam. Illo, voluptas itaque corporis amet consequuntur eius molestiae repudiandae rerum, sit id modi inventore. Ut, reiciendis laudantium neque nesciunt ex labore autem dolorum consequuntur
+                    accusantium molestias perspiciatis corporis illo sit, architecto fuga! Quo neque odio esse sapiente sit reprehenderit pariatur perspiciatis quisquam nulla, voluptas saepe itaque quia provident perferendis ducimus, alias atque aliquid cumque
+                    nihil laudantium recusandae suscipit!
+                </p>
+            </div>
+        </div>
+    
     </div>
 
     <!-- Футер -->
@@ -172,6 +233,7 @@
         </div>
     </footer>
 
+    <script defer src="js/index.js"></script>
     <!-- Подключение Bootstrap JS (необходим для работы модальных окон и других компонентов) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
