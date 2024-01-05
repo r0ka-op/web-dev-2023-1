@@ -127,71 +127,54 @@
             </div>
         </div>
 
-        <form>
-            <div class="row">
-                <div class="col-md-4" id="route-search">
-                    <label class="sr-only" for="route-name">Название маршрута</label>
-                    <input type="text" class="form-control mb-2" id="route-name" placeholder="Введите название маршрута">
-                </div>
-                <div class="col-auto" id="route-list">
-                    <select class="form-control" id="landmark">
-                        <option value="" disabled selected>Поиск по достопримечательности</option>  
-                        <option value="landmark1">Достопримечательность 1</option>
-                        <option value="landmark2">Достопримечательность 2</option>
-                        <!-- Добавьте свои варианты достопримечательностей -->
-                    </select>
-                    <label for="landmark"></label>
+        
+        <div class="row">
+            <div class="col-md-4" id="route-search">
+                <label class="sr-only" for="route-name">Название маршрута</label>
+                <input type="text" class="form-control mb-2" id="route-name" placeholder="Введите название маршрута">
+            </div>
+            <div class="col-auto" id="route-list">
+                <select class="form-control" id="landmark">
+                    <option value="" disabled selected>Поиск по достопримечательности</option>  
+                    <option value="landmark1">Достопримечательность 1</option>
+                    <option value="landmark2">Достопримечательность 2</option>
+                    <!-- Добавьте свои варианты достопримечательностей -->
+                </select>
+                <label for="landmark"></label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm" id="route-table">
+                <div class="table-responsive">
+                    <table class="table table-rounded">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Описание</th>
+                                <th scope="col">Основные объекты</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="route-table-body">
+                            <!-- Здесь будут добавлены строки с данными маршрутов -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="col-sm" id="route-table">
-                    <div class="table-responsive">
-                        <table class="table table-rounded">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Название</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">Основные объекты</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Название</td>
-                                    <td>Описание</td>
-                                    <td>объект, объект</td>
-                                    <td><button class="btn btn-primary">Выбрать</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Название</td>
-                                    <td>Описание</td>
-                                    <td>объект, объект</td>
-                                    <td><button class="btn btn-primary">Выбрать</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Название</td>
-                                    <td>Описание</td>
-                                    <td>объект, объект</td>
-                                    <td><button class="btn btn-primary">Выбрать</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>                       
-        </form>
+        </div>                     
+
 
         <div class="row">
-            <div class="col-md-12" >
+            <div class="col-md-12" id="pagination" >
                 <nav aria-label="page navigation">
-                    <ul class="pagination justify-content-center">
+                    <ul class="pagination justify-content-center" id="pagination-list">
                         <li class="page-item disabled">
                             <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span class="arrow-left">➜</span></a>
                         </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item active"><a class="page-link">1</a></li>
+                        <li class="page-item"><a class="page-link">2</a></li>
+                        <li class="page-item"><a class="page-link">3</a></li>
                         <li class="page-item">
                             <a class="page-link" href="#">➜</a>
                         </li>
@@ -199,6 +182,7 @@
                 </nav>
             </div>
         </div>
+
     </div>
 
     <!-- Форма для поиска гидов -->
