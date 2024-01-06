@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -136,9 +136,7 @@
             <div class="col-auto" id="route-list">
                 <select class="form-control" id="landmark">
                     <option value="" disabled selected>Поиск по достопримечательности</option>  
-                    <option value="landmark1">Достопримечательность 1</option>
-                    <option value="landmark2">Достопримечательность 2</option>
-                    <!-- Добавьте свои варианты достопримечательностей -->
+                        <!-- Здесь будут добавлены варианты достопримечательностей -->
                 </select>
                 <label for="landmark"></label>
             </div>
@@ -173,8 +171,6 @@
                             <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><span class="arrow-left">➜</span></a>
                         </li>
                         <li class="page-item active"><a class="page-link">1</a></li>
-                        <li class="page-item"><a class="page-link">2</a></li>
-                        <li class="page-item"><a class="page-link">3</a></li>
                         <li class="page-item">
                             <a class="page-link" href="#">➜</a>
                         </li>
@@ -189,77 +185,75 @@
     <div class="container mt-3" id="guides-form">
         <div class="row">
             <div class="col-auto" id="guides-title">
-                <h4>Доступные гиды по маршруту <u>Название маршрута</u></h4>
+                <h4>Доступные гиды по маршруту <u id="route-name-h4">Название маршрута</u></h4>
             </div>
         </div>
 
-        <form>
-            <div class="row">
-                <div class="col-md-4" id="guides-search-language">
-                    <select class="form-control" id="language" name="guides-language">
-                        <option value="" disabled selected>Язык экскурсии</option>
-                        <option value="language1">Язык 1</option>
-                        <option value="language2">Язык 2</option>
-                        <option value="language3">Язык 3</option>
-                        <!-- Добавьте других гидов по мере необходимости -->
-                    </select>
-                    <label for="guides"></label>
-                </div>
-                
-                <div class="col-md-4 d-flex" id="guides-search-experience">
-                    <label class="mb-0" for="experience"><span id="experience-title">Опыт&nbsp;работы:</span></label>
-                    <div class="input-group">
-                        <input type="number" class="form-control mb-0" id="experience-at" placeholder="от">
-                        <input type="number" class="form-control mb-0" id="experience-to" placeholder="до">
-                    </div>
-                </div>  
+        <div class="row">
+            <div class="col-md-4" id="guides-search-language">
+                <select class="form-control" id="language" name="guides-language">
+                    <option value="" disabled selected>Язык экскурсии</option>
+                    <option value="language1">Язык 1</option>
+                    <option value="language2">Язык 2</option>
+                    <option value="language3">Язык 3</option>
+                    <!-- Добавьте других гидов по мере необходимости -->
+                </select>
+                <label for="guides"></label>
             </div>
             
-            <div class="row">
-                <div class="col-sm" id="guides-table">
-                    <div class="table-responsive">
-                        <table class="table table-rounded">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col">ФИО</th>
-                                    <th scope="col">Языки</th>
-                                    <th scope="col">Опыт работы</th>
-                                    <th scope="col">Стоимость услуги в час</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>ФИО</td>
-                                    <td>язык</td>
-                                    <td>объект, объект</td>
-                                    <td>стоимость/час</td>
-                                    <td><button class="btn btn-primary" id="open-modal-btn1">Выбрать</button></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>ФИО</td>
-                                    <td>язык, язык</td>
-                                    <td>объект, объект</td>
-                                    <td>стоимость/час</td>
-                                    <td><button class="btn btn-primary" id="open-modal-btn2">Выбрать</button></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>ФИО</td>
-                                    <td>язык, язык, язык</td>
-                                    <td>объект, объект</td>
-                                    <td>стоимость/час</td>
-                                    <td><button class="btn btn-primary" id="open-modal-btn3">Выбрать</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="col-md-4 d-flex" id="guides-search-experience">
+                <label class="mb-0" for="experience"><span id="experience-title">Опыт&nbsp;работы:</span></label>
+                <div class="input-group">
+                    <input type="number" class="form-control mb-0" id="experience-at" placeholder="от">
+                    <input type="number" class="form-control mb-0" id="experience-to" placeholder="до">
                 </div>
-            </div>                       
-        </form>
+            </div>  
+        </div>
+        
+        <div class="row">
+            <div class="col-sm" id="guides-table">
+                <div class="table-responsive">
+                    <table class="table table-rounded">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">ФИО</th>
+                                <th scope="col">Языки</th>
+                                <th scope="col">Опыт работы</th>
+                                <th scope="col">Стоимость услуги в час</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="files/free-icon-avatar-7236095.png" width="50" alt="Фото гида"></td>
+                                <td>ФИО</td>
+                                <td>язык</td>
+                                <td>объект, объект</td>
+                                <td>стоимость/час</td>
+                                <td><button class="btn btn-primary" id="open-modal-btn1">Выбрать</button></td>
+                            </tr>
+                            <tr>
+                                <td><img src="files/free-icon-avatar-7236095.png" width="50" alt="Фото гида"></td>
+                                <td>ФИО</td>
+                                <td>язык, язык</td>
+                                <td>объект, объект</td>
+                                <td>стоимость/час</td>
+                                <td><button class="btn btn-primary" id="open-modal-btn2">Выбрать</button></td>
+                            </tr>
+                            <tr>
+                                <td><img src="files/free-icon-avatar-7236095.png" width="50" alt="Фото гида"></td>
+                                <td>ФИО</td>
+                                <td>язык, язык, язык</td>
+                                <td>объект, объект</td>
+                                <td>стоимость/час</td>
+                                <td><button class="btn btn-primary" id="open-modal-btn3">Выбрать</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -392,6 +386,8 @@
     </footer>
 
     <script defer src="js/index.js"></script>
+    <script defer src="js/routes.js"></script>
+
     <!-- Подключение Bootstrap JS (необходим для работы модальных окон и других компонентов) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

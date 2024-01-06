@@ -7,13 +7,13 @@ h3, h2 {
 }
 
 #description {
-    background: rgb(0, 255, 208);
+    /* background: rgb(0, 255, 208); */
 }
 
 #advantages img {
     /* width: 263px;
     height: 393px; */
-    background: red;
+    /* background: red; */
     margin: auto;
 }
 
@@ -25,11 +25,11 @@ h3, h2 {
     margin-top: 20px;
     width: 50px;
     height: 50px;
-    background: rgb(187, 0, 255);
+    background: rgb(255, 0, 195);
 }
 
 #routes {
-    background: rgb(157, 255, 0);
+    /* background: rgb(157, 255, 0); */
 }
 
 #route-title {
@@ -37,7 +37,7 @@ h3, h2 {
 }
 
 #route-search, #route-list {
-    background: red;
+    /* background: red; */
 }
 
 #landmark, #guides {
@@ -50,7 +50,7 @@ h3, h2 {
 }
 
 #route-table, #guides-table {
-    background: red;
+    /* background: red; */
 }
 
 .table-rounded {
@@ -63,7 +63,7 @@ h3, h2 {
 }
 
 #routes-form {
-    background: rgb(0, 102, 255);
+    /* background: rgb(0, 102, 255); */
 }
 
 .arrow-left {
@@ -72,18 +72,18 @@ h3, h2 {
 }
 
 .pagination {
-    background: rgb(153, 0, 255);
+    /* background: rgb(153, 0, 255); */
     margin-top: 10px;
 }
 
 #guides-list {
-    background: rgb(255, 0, 111);
+    /* background: rgb(255, 0, 111); */
 }
 
 #guides-form {
     /* width: 263px;
     height: 393px; */
-    background: rgb(212, 255, 0);
+    /* background: rgb(212, 255, 0); */
 }
 
 #guides-search-experience label {
@@ -104,7 +104,17 @@ h3, h2 {
 }
 
 #btn {
-    background: rgb(0, 255, 162);
+    /* background: rgb(0, 255, 162); */
+}
+
+.selected {
+    background-color: #ffc999; 
+}
+
+.selected .choose-button {
+    background-color: gray;
+    color: white;
+    pointer-events: none; /* Это предотвратит активацию кнопки после выбора */
 }
 
 .form-group button {
@@ -112,7 +122,12 @@ h3, h2 {
     display: block;
 }
 
-/* стили для основного модального окна */
+/* Стиль для скрытых описаний */
+.description-cell.hidden {
+    display: none;
+}
+
+/* Общие свойства модальных окон */
 
 .modal {
     position: fixed;
@@ -175,7 +190,7 @@ h3, h2 {
 }
 /* ===== */
 
-/* Стили для модального окна подтверждения отмены */
+/* Стили для нового модального окна подтверждения отмены */
 #cancel-confirmation-modal .modal__box {
     position: relative;
     max-width: 300px; /* Примерное значение, подберите под свой дизайн */
