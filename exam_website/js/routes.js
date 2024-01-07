@@ -71,7 +71,10 @@ async function routeTable() {
             const mainObjectsCell = document.createElement('td');
             const chooseButtonCell = document.createElement('td');
             const chooseButton = document.createElement('button');
-    
+            
+
+            
+
             // Заполняем ячейки данными маршрута
             nameCell.textContent = route.name;
     
@@ -82,9 +85,9 @@ async function routeTable() {
     
                 // Добавляем кнопку "раскрыть описание"
                 const expandButton = document.createElement('button');
-                expandButton.textContent = 'Раскрыть описание';
+                expandButton.textContent = 'Раскрыть текст';
                 expandButton.classList.add('expand-button');
-                expandButton.addEventListener('click', () => expandDescription(descriptionCell, route.description));
+                expandButton.addEventListener('click', () => expandDescription(descriptionCell, route.description, route.id));
                 descriptionCell.appendChild(expandButton);
             } else {
                 descriptionCell.textContent = route.description;
@@ -92,14 +95,14 @@ async function routeTable() {
 
             // Проверяем длину текста графы "объекты"
             if (route.mainObject.length > 127) {
-                const truncatedMainObjeect = route.description.substring(0, 127) + '...';
+                const truncatedMainObjeect = route.mainObject.substring(0, 127) + '...';
                 mainObjectsCell.textContent = truncatedMainObjeect;
     
                 // Добавляем кнопку "раскрыть описание"
                 const expandButton = document.createElement('button');
-                expandButton.textContent = 'Раскрыть описание';
+                expandButton.textContent = 'Раскрыть текст';
                 expandButton.classList.add('expand-button');
-                expandButton.addEventListener('click', () => expandDescription(mainObjectsCell, route.mainObject));
+                expandButton.addEventListener('click', () => expandDescription(mainObjectsCell, route.mainObject, route.id));
                 mainObjectsCell.appendChild(expandButton);
             } else {
                 mainObjectsCell.textContent = route.mainObject;
@@ -127,27 +130,33 @@ async function routeTable() {
     }
 
     // Функция для обработки клика на кнопке "раскрыть описание"
-    function expandDescription(descriptionCell, fullDescription) {
+    function expandDescription(descriptionCell, fullDescription, routeId) {
         descriptionCell.innerHTML = fullDescription;
 
         // Добавляем кнопку "скрыть описание"
         const collapseButton = document.createElement('button');
-        collapseButton.textContent = 'Скрыть описание';
+        collapseButton.textContent = 'Скрыть текст';
         collapseButton.classList.add('expand-button');
-        collapseButton.addEventListener('click', () => collapseDescription(descriptionCell, fullDescription));
+        collapseButton.addEventListener('click', () => collapseDescription(descriptionCell, fullDescription, routeId));
         descriptionCell.appendChild(collapseButton);
+
+        // Прокручиваем к строке с заданным routeId
+        const selectedRow = document.querySelector(`[data-route-id="${routeId}"]`);
+        if (selectedRow) {
+            selectedRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
     // Функция для обработки клика на кнопке "скрыть описание"
-    function collapseDescription(descriptionCell, truncatedDescription) {
+    function collapseDescription(descriptionCell, truncatedDescription, routeId) {
         // Очищаем содержимое ячейки
         descriptionCell.textContent = truncatedDescription.substring(0, 127) + '...';
     
         // Добавляем кнопку "раскрыть описание"
         const expandButton = document.createElement('button');
-        expandButton.textContent = 'Раскрыть описание';
+        expandButton.textContent = 'Раскрыть тест';
         expandButton.classList.add('expand-button');
-        expandButton.addEventListener('click', () => expandDescription(descriptionCell, truncatedDescription));
+        expandButton.addEventListener('click', () => expandDescription(descriptionCell, truncatedDescription, routeId));
         descriptionCell.appendChild(expandButton);
     }
     
@@ -266,6 +275,7 @@ async function routeTable() {
             currentPage = newPage;
             // Перезаполняем таблицу с учетом новой страницы
             fillRouteTable(postsData, rowPerPage, currentPage);
+            loadSelectedRouteOnPageLoad();
         }
         console.log(`Страница ${currentPage}`);
     }
@@ -317,18 +327,15 @@ async function routeTable() {
         const input = document.getElementById('route-name');
         const inputValue = input.value.toLowerCase();
 
-        const landmarkSelect = document.getElementById('landmark');
-        const selectedLandmark = landmarkSelect.value;
-
         // Фильтрация данных по названию и достопримечательности
-        const filteredRoutes = data.filter(route =>
-            route.name.toLowerCase().includes(inputValue) &&
-            (selectedLandmark === '' || route.mainObject.toLowerCase().includes(selectedLandmark))
+        const filteredRoutes = postsData.filter(route =>
+            route.name.toLowerCase().includes(inputValue)
         );
 
         // Вызываем функцию для обновления таблицы с учетом отфильтрованных данных
-        fillRouteTable(filteredRoutes, rows, currentPage);  
+        fillRouteTable(filteredRoutes, rows, currentPage);
         fillPagination(filteredRoutes, rows);
+        loadSelectedRouteOnPageLoad();
     }
 
     // Получаем ссылку на элемент select для выбора достопримечательности
@@ -344,87 +351,6 @@ async function routeTable() {
     fillRouteTable(postsData, rows, currentPage);
     fillPagination(postsData, rows);
     loadSelectedRouteOnPageLoad();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Функция для получения данных о гидах по маршруту
-// async function fetchGuides(routeId) {
-//     try {
-//         const response = await fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/guides?route_id=${routeId}&api_key=${api_key}`);
-
-//         if (!response.ok) {
-//             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
-//         }
-
-//         const guidesData = await response.json();
-//         return guidesData;
-//     } catch (error) {
-//         console.error('Ошибка при получении данных о гидах:', error.message);
-//         return [];
-//     }
-// }
-
-//     // Функция для заполнения таблицы гидов
-//     async function fillGuidesTable(routeId) {
-//         const guidesTableBody = document.getElementById('guides-table').getElementsByTagName('tbody')[0];
-        
-//         // Очищаем текущее содержимое таблицы
-//         guidesTableBody.innerHTML = '';
-
-//         const guidesData = await fetchGuides(routeId);
-
-//         guidesData.forEach((guide, index) => {
-//             const row = document.createElement('tr');
-//             const photoCell = document.createElement('td');
-//             const nameCell = document.createElement('td');
-//             const languagesCell = document.createElement('td');
-//             const experienceCell = document.createElement('td');
-//             const priceCell = document.createElement('td');
-//             const chooseButtonCell = document.createElement('td');
-//             const chooseButton = document.createElement('button');
-    
-//             photoCell.innerHTML = `<img src="files/free-icon-avatar-7236095.png" width="50" alt="Фото гида">`;
-//             nameCell.textContent = guide.name;
-//             languagesCell.textContent = guide.language;
-//             experienceCell.textContent = guide.workExperience;
-//             priceCell.textContent = guide.pricePerHour;
-//             chooseButton.textContent = 'Выбрать';
-//             chooseButton.classList.add('btn', 'btn-primary');
-//             chooseButton.addEventListener('click', () => selectGuide(guide, routeId));
-    
-//             row.appendChild(photoCell);
-//             row.appendChild(nameCell);
-//             row.appendChild(languagesCell);
-//             row.appendChild(experienceCell);
-//             row.appendChild(priceCell);
-//             chooseButtonCell.appendChild(chooseButton);
-//             row.appendChild(chooseButtonCell);
-    
-//             guidesTableBody.appendChild(row);
-//         });
-//     }
-
-//     // Функция для обработки выбора гида
-//     function selectGuide(guideId) {
-//         // Ваш код обработки выбора гида
-//         console.log('Выбранный гид:', guideId);
-//     }
-
 }
   
 
@@ -550,6 +476,14 @@ async function guideTable() {
             event.target.parentNode.classList.add('active');
         });
     }
+
+     // Функция для обработки выбора гида
+    function selectGuide(guideId) {
+        // Ваш код обработки выбора гида
+        console.log('Выбранный гид:', guideId);
+    }
+
+
 
     // Обновленная функция для заполнения таблицы гидов
     function fillGuidesTable(guidesData, rowPerPage, page) {
