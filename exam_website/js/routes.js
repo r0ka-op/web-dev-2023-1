@@ -9,7 +9,10 @@ async function fetchData(urn) {
     
     console.log(url)
     try {
+        console.log("до url")
         const response = await fetch(url);
+
+        console.log("после url")
 
         if (!response.ok) {
             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
@@ -22,20 +25,24 @@ async function fetchData(urn) {
     }
 }
 
+
+// Функция для сохранения выбранного маршрута в localStorage
+function saveSelectedRoute(routeId) {
+    localStorage.setItem('selectedRoute', routeId);
+}
+
+// Функция для загрузки выбранного маршрута из localStorage
+function loadSelectedRoute() {
+    return localStorage.getItem('selectedRoute');
+}
+
+
 async function routeTable() {
     const postsData = await fetchData('http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes');
     let currentPage = 1;
     let rows = 10;
 
-    // Функция для сохранения выбранного маршрута в localStorage
-    function saveSelectedRoute(routeId) {
-        localStorage.setItem('selectedRoute', routeId);
-    }
 
-    // Функция для загрузки выбранного маршрута из localStorage
-    function loadSelectedRoute() {
-        return localStorage.getItem('selectedRoute');
-    }
 
     // Функция для заполнения таблицы маршрутов
     function fillRouteTable(arrData, rowPerPage, page) {
@@ -159,25 +166,24 @@ async function routeTable() {
     // Функция для обработки выбора маршрута
     function selectRoute(routeId, row) {
         const selectedRoute = data.find(route => route.id === routeId);
-    
+
         if (selectedRoute) {
             clearSelection();
-    
             row.classList.add('selected');
             selectedData = [selectedRoute];
-    
             const chooseButton = row.querySelector('.choose-button');
             chooseButton.classList.add('selected');
             chooseButton.textContent = 'Выбрано';
-    
             saveSelectedRoute(routeId); // Сохраняем выбранный маршрут в localStorage
-    
             updateRouteNameInTitle();
+            // Обновляем таблицу гидов при выборе нового маршрута
+            guideTable();
             console.log('Выбранный маршрут:', selectedRoute);
         } else {
             console.error(`Маршрут с id ${routeId} не найден в данных.`);
         }
     }
+
     
 
     // Функция для загрузки выбранного маршрута при загрузке страницы
@@ -217,7 +223,7 @@ async function routeTable() {
     // Функция для заполнения пагинации
     function fillPagination(arrData, rowPerPage) {
         const totalPages = Math.ceil(arrData.length / rowPerPage);
-        const paginationList = document.getElementById('pagination-list');
+        const paginationList = document.getElementById('pagination-list-routes');
         paginationList.innerHTML = '';
 
         // Добавляем кнопки с номерами страниц
@@ -302,7 +308,7 @@ async function routeTable() {
 
     // Функция для обновления пагинации
     function updatePagination() {
-        const paginationList = document.getElementById('pagination-list');
+        const paginationList = document.getElementById('pagination-list-routes');
         paginationList.innerHTML = '';
     }
 
@@ -323,7 +329,6 @@ async function routeTable() {
         // Вызываем функцию для обновления таблицы с учетом отфильтрованных данных
         fillRouteTable(filteredRoutes, rows, currentPage);  
         fillPagination(filteredRoutes, rows);
-        loadSelectedRouteOnPageLoad();
     }
 
     // Получаем ссылку на элемент select для выбора достопримечательности
@@ -340,6 +345,275 @@ async function routeTable() {
     fillPagination(postsData, rows);
     loadSelectedRouteOnPageLoad();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // Функция для получения данных о гидах по маршруту
+// async function fetchGuides(routeId) {
+//     try {
+//         const response = await fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/guides?route_id=${routeId}&api_key=${api_key}`);
+
+//         if (!response.ok) {
+//             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+//         }
+
+//         const guidesData = await response.json();
+//         return guidesData;
+//     } catch (error) {
+//         console.error('Ошибка при получении данных о гидах:', error.message);
+//         return [];
+//     }
+// }
+
+//     // Функция для заполнения таблицы гидов
+//     async function fillGuidesTable(routeId) {
+//         const guidesTableBody = document.getElementById('guides-table').getElementsByTagName('tbody')[0];
+        
+//         // Очищаем текущее содержимое таблицы
+//         guidesTableBody.innerHTML = '';
+
+//         const guidesData = await fetchGuides(routeId);
+
+//         guidesData.forEach((guide, index) => {
+//             const row = document.createElement('tr');
+//             const photoCell = document.createElement('td');
+//             const nameCell = document.createElement('td');
+//             const languagesCell = document.createElement('td');
+//             const experienceCell = document.createElement('td');
+//             const priceCell = document.createElement('td');
+//             const chooseButtonCell = document.createElement('td');
+//             const chooseButton = document.createElement('button');
+    
+//             photoCell.innerHTML = `<img src="files/free-icon-avatar-7236095.png" width="50" alt="Фото гида">`;
+//             nameCell.textContent = guide.name;
+//             languagesCell.textContent = guide.language;
+//             experienceCell.textContent = guide.workExperience;
+//             priceCell.textContent = guide.pricePerHour;
+//             chooseButton.textContent = 'Выбрать';
+//             chooseButton.classList.add('btn', 'btn-primary');
+//             chooseButton.addEventListener('click', () => selectGuide(guide, routeId));
+    
+//             row.appendChild(photoCell);
+//             row.appendChild(nameCell);
+//             row.appendChild(languagesCell);
+//             row.appendChild(experienceCell);
+//             row.appendChild(priceCell);
+//             chooseButtonCell.appendChild(chooseButton);
+//             row.appendChild(chooseButtonCell);
+    
+//             guidesTableBody.appendChild(row);
+//         });
+//     }
+
+//     // Функция для обработки выбора гида
+//     function selectGuide(guideId) {
+//         // Ваш код обработки выбора гида
+//         console.log('Выбранный гид:', guideId);
+//     }
+
 }
   
+
+
+
+
+
+// Функция для получения данных о гидах по выбранному маршруту
+async function fetchGuides(routeId) {
+    try {
+        const response = await fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}/guides?api_key=${api_key}`);
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+        }
+
+        const guidesData = await response.json();
+        return guidesData;
+    } catch (error) {
+        console.error('Ошибка при получении данных о гидах:', error.message);
+        return [];
+    }
+}
+
+
+
+
+
+
+    
+
+
+
+
+// Функция для обновления таблицы гидов при выборе маршрута
+async function guideTable() {
+    const selectedRouteId = loadSelectedRoute();
+    let guidesData;
+    let currentPage = 1;
+    let rows = 5;
+
+    if (selectedRouteId) {
+        guidesData = await fetchGuides(selectedRouteId);
+
+        if (guidesData.length > 0) {
+            fillGuidesTable(guidesData, rows, currentPage);
+            fillGuidesPagination(guidesData, rows, currentPage); // передаем currentPage в функцию fillGuidesPagination
+            setupGuidesPaginationEvent(guidesData, rows);
+        } else {
+            // Обработка случая, когда нет доступных гидов
+            console.log("Нет гидов для данного маршрута.")
+            return;
+        }
+    }
+
+    // Функция для заполнения пагинации гидов
+    function fillGuidesPagination(guidesData, rowPerPage) {
+        const totalPages = Math.ceil(guidesData.length / rowPerPage);
+        const paginationList = document.getElementById('pagination-list-guides');
+        paginationList.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = createPaginationButton(i, i);
+            paginationList.appendChild(pageButton);
+        }
+
+        // Установка активного класса для первой страницы
+        const firstPageButton = paginationList.querySelector('li:first-child a');
+        if (firstPageButton) {
+            firstPageButton.classList.add('active');
+        }
+    }
+    
+    
+    // Функция для создания элемента кнопки пагинации
+    function createPaginationButton(text, page) {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.classList.add('page-link');
+        link.href = '#guides-table-body'; // Уточните соответствующий ID таблицы гидов
+        link.innerHTML = text;
+
+        if (currentPage == page) li.classList.add('active');
+
+        link.addEventListener('click', () => {
+            currentPage = page;
+            handleGuidesPageClick(guidesData, rows, currentPage);
+
+            // Установка активного класса при переключении страниц
+            const currentActiveButton = document.querySelector('#pagination-list-guides .active');
+            if (currentActiveButton) {
+                currentActiveButton.classList.remove('active');
+            }
+            li.classList.add('active');
+        });
+
+        li.classList.add('page-item');
+        li.appendChild(link);
+        return li;
+    }
+
+    // Функция для обработки нажатия на кнопку пагинации гидов
+    function handleGuidesPageClick(guidesData, rowPerPage, newPage) {
+        if (newPage >= 1 && newPage <= Math.ceil(guidesData.length / rowPerPage)) {
+            currentPage = newPage;
+            fillGuidesTable(guidesData, rowPerPage, currentPage);
+        }
+    }
+
+    // Добавление обработчика события на кнопки пагинации гидов
+    function setupGuidesPaginationEvent(guidesData, rowPerPage) {
+        const paginationList = document.getElementById('pagination-list-guides');
+        
+        paginationList.addEventListener('click', (event) => {
+            const targetPage = parseInt(event.target.innerHTML);
+            handleGuidesPageClick(guidesData, rowPerPage, targetPage);
+
+            // Установка активного класса при переключении страниц
+            const currentActiveButton = document.querySelector('#pagination-list-guides .active');
+            if (currentActiveButton) {
+                currentActiveButton.classList.remove('active');
+            }
+            event.target.parentNode.classList.add('active');
+        });
+    }
+
+    // Обновленная функция для заполнения таблицы гидов
+    function fillGuidesTable(guidesData, rowPerPage, page) {
+        const guidesTableBody = document.getElementById('guides-table').getElementsByTagName('tbody')[0];
+        page--;
+
+        guidesTableBody.innerHTML = '';
+
+        const start = rowPerPage * (page);
+        const end = start + rowPerPage;
+        const paginatedData = guidesData.slice(start, end);
+
+        paginatedData.forEach((guide) => {
+            const row = document.createElement('tr');
+            const photoCell = document.createElement('td');
+            const nameCell = document.createElement('td');
+            const languagesCell = document.createElement('td');
+            const experienceCell = document.createElement('td');
+            const priceCell = document.createElement('td');
+            const chooseButtonCell = document.createElement('td');
+            const chooseButton = document.createElement('button');
+
+            photoCell.innerHTML = `<img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида">`;
+            nameCell.textContent = guide.name;
+            languagesCell.textContent = guide.language;
+            experienceCell.textContent = guide.workExperience;
+            priceCell.textContent = guide.pricePerHour;
+            chooseButton.textContent = 'Выбрать';
+            chooseButton.classList.add('btn', 'btn-primary');
+            chooseButton.addEventListener('click', () => selectGuide(guide.id));
+
+            row.appendChild(photoCell);
+            row.appendChild(nameCell);
+            row.appendChild(languagesCell);
+            row.appendChild(experienceCell);
+            row.appendChild(priceCell);
+            chooseButtonCell.appendChild(chooseButton);
+            row.appendChild(chooseButtonCell);
+
+            guidesTableBody.appendChild(row);
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 routeTable();
+
+guideTable();
