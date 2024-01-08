@@ -1,6 +1,7 @@
 const api_key = 'd01e7184-0896-49ea-986a-8320b70192fe'
 
-let selectedData = [];
+let selectedData = Array(2);
+selectedData[0] = JSON.parse(localStorage.getItem('selectedRoute'))[0];
 
 
 // Функция для получения данных с API
@@ -23,17 +24,6 @@ async function fetchData(urn) {
     } catch (error) {
         console.error('Ошибка при получении данных:', error.message);
     }
-}
-
-
-// Функция для сохранения выбранного маршрута в localStorage
-function saveSelectedRoute(routeId) {
-    localStorage.setItem('selectedRoute', routeId);
-}
-
-// Функция для загрузки выбранного маршрута из localStorage
-function loadSelectedRoute() {
-    return localStorage.getItem('selectedRoute');
 }
 
 
@@ -165,8 +155,8 @@ async function routeTable() {
     function updateRouteNameInTitle() {
         const routeNameElement = document.getElementById('route-name-h4');
 
-        if (selectedData.length > 0) {
-            routeNameElement.textContent = selectedData[0].name;
+        if (JSON.parse(localStorage.getItem('selectedRoute'))[0].name.length > 0) {
+            routeNameElement.textContent = JSON.parse(localStorage.getItem('selectedRoute'))[0].name;
         } else {
             routeNameElement.textContent = 'Название маршрута';
         }
@@ -183,10 +173,11 @@ async function routeTable() {
             const chooseButton = row.querySelector('.choose-button');
             chooseButton.classList.add('selected');
             chooseButton.textContent = 'Выбрано';
-            saveSelectedRoute(routeId); // Сохраняем выбранный маршрут в localStorage
+            localStorage.setItem('selectedRoute', JSON.stringify(selectedData)); // Сохраняем выбранный маршрут в localStorage
             updateRouteNameInTitle();
             // Обновляем таблицу гидов при выборе нового маршрута
             guideTable();
+            loadSelectedRouteOnPageLoad();
             console.log('Выбранный маршрут:', selectedRoute);
         } else {
             console.error(`Маршрут с id ${routeId} не найден в данных.`);
@@ -197,12 +188,13 @@ async function routeTable() {
 
     // Функция для загрузки выбранного маршрута при загрузке страницы
     function loadSelectedRouteOnPageLoad() {
-        const selectedRouteId = loadSelectedRoute();
-        if (selectedRouteId) {
+        const selectedRoute = JSON.parse(localStorage.getItem('selectedRoute'))[0];
+        if (selectedRoute.id) {
             // Найти строку маршрута по id и выделить ее
-            const selectedRow = document.querySelector(`[data-route-id="${selectedRouteId}"]`);
+            const selectedRow = document.querySelector(`[data-route-id="${selectedRoute.id}"]`);
             if (selectedRow) {
                 selectedRow.classList.add('selected');
+                updateRouteNameInTitle();
             }
         }
     }
@@ -358,6 +350,23 @@ async function routeTable() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Функция для получения данных о гидах по выбранному маршруту
 async function fetchGuides(routeId) {
     try {
@@ -380,20 +389,20 @@ async function fetchGuides(routeId) {
 
 
 
-    
 
+    
 
 
 
 // Функция для обновления таблицы гидов при выборе маршрута
 async function guideTable() {
-    const selectedRouteId = loadSelectedRoute();
+    const selectedRoute = JSON.parse(localStorage.getItem('selectedRoute'))[0];
     let guidesData;
     let currentPage = 1;
     let rows = 5;
 
-    if (selectedRouteId) {
-        guidesData = await fetchGuides(selectedRouteId);
+    if (selectedRoute.id) {
+        guidesData = await fetchGuides(selectedRoute.id);
 
         if (guidesData.length > 0) {
             fillGuidesTable(guidesData, rows, currentPage);
@@ -458,6 +467,8 @@ async function guideTable() {
             currentPage = newPage;
             fillGuidesTable(guidesData, rowPerPage, currentPage);
         }
+
+        fillGuidesTable(guidesData, rowPerPage, currentPage); // Перезаполняем таблицу с учетом новой страницы
     }
 
     // Добавление обработчика события на кнопки пагинации гидов
@@ -479,9 +490,23 @@ async function guideTable() {
 
      // Функция для обработки выбора гида
     function selectGuide(guideId) {
-        // Ваш код обработки выбора гида
+        document.getElementById("my-modal").classList.add("open");
+        const routeNameElement = document.getElementById('routeName');
+        const guideNameElement = document.getElementById('guideName');
+        
+        routeNameElement.value = selectedData[0].name;
+        routeNameElement.size = selectedData[0].name.length + 5;
+
+        guidesData.forEach(guide => {
+            if (guideId == guide.id) {
+                guideNameElement.value = guide.name;
+                localStorage.setItem('selectedGuide', JSON.stringify([guide]));
+                selectedData[1] = guide;
+            }
+        });
         console.log('Выбранный гид:', guideId);
     }
+
 
 
 
@@ -511,7 +536,7 @@ async function guideTable() {
             languagesCell.textContent = guide.language;
             experienceCell.textContent = guide.workExperience;
             priceCell.textContent = guide.pricePerHour;
-            chooseButton.textContent = 'Выбрать';
+            chooseButton.textContent = 'Оформить заявку';
             chooseButton.classList.add('btn', 'btn-primary');
             chooseButton.addEventListener('click', () => selectGuide(guide.id));
 
@@ -526,6 +551,111 @@ async function guideTable() {
             guidesTableBody.appendChild(row);
         });
     }
+
+
+
+    // Функция для получения уникальных языков из данных о гидах
+    function getUniqueLanguages(guidesData) {
+        const uniqueLanguages = new Set();
+
+        guidesData.forEach(guide => {
+            uniqueLanguages.add(guide.language);
+        });
+
+        return Array.from(uniqueLanguages);
+    }
+
+    // Функция для заполнения списка языков гидов
+    function fillLanguagesSelect(guidesData) {
+        const languageSelect = document.getElementById('language');
+        const languages = getUniqueLanguages(guidesData);
+
+        // Очищаем текущее содержимое списка
+        languageSelect.innerHTML = '';
+
+        // Добавляем первый вариант "--Не выбрано--"
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.selected = true;
+        defaultOption.textContent = 'Язык экскурсии';
+        languageSelect.appendChild(defaultOption);
+
+        // Добавляем варианты языков в список
+        languages.forEach((language, index) => {
+            const option = document.createElement('option');
+            option.value = `language${index + 1}`;
+            option.textContent = language;
+            languageSelect.appendChild(option);
+        });
+    }
+     
+
+    // Функция для обработки выбора языка в поиске гидов
+    function handleLanguageSearch() {
+        const option = document.getElementById('language');
+        const optionText = option.textContent.toLowerCase();
+        console.log(option)
+        console.log(optionText)
+
+        // Фильтрация данных по языку и названию
+        const filteredGuides = guidesData.filter(guide =>
+            (optionText.includes(guide.name.toLowerCase()))
+        );
+
+        // Вызываем функцию для обновления таблицы с учетом отфильтрованных данных
+        fillGuidesTable(filteredGuides, rows, currentPage);
+        fillGuidesPagination(filteredGuides, rows);
+    }
+
+
+    // Функция для обработки изменения значений в полях стажа
+    function handleExperienceSearch() {
+        const experienceAtInput = document.getElementById('experience-at');
+        const experienceToInput = document.getElementById('experience-to');
+
+        const minExperience = parseInt(experienceAtInput.value) || 0;
+        const maxExperience = parseInt(experienceToInput.value) || Infinity;
+
+        console.log(`Минимальный опыт работы: ${minExperience}`);
+        console.log(`Максимальный опыт работы: ${maxExperience}`);
+
+        // Проверим, что у нас есть данные гидов
+        console.log(guidesData);
+
+        // Фильтрация данных по опыту работы
+        const filteredGuides = guidesData.filter(guide =>
+            guide.workExperience >= minExperience && guide.workExperience <= maxExperience
+        );
+
+        console.log('Отфильтрованные гиды:', filteredGuides);
+
+        // Вызываем функцию для обновления таблицы с учетом отфильтрованных данных
+        fillGuidesTable(filteredGuides, rows, currentPage);
+        fillGuidesPagination(filteredGuides, rows);
+    }
+
+    // Получаем ссылки на элементы ввода стажа
+    const experienceAtInput = document.getElementById('experience-at');
+    const experienceToInput = document.getElementById('experience-to');
+
+    // Добавляем обработчик события на изменение значений в полях стажа
+    experienceAtInput.addEventListener('input', handleExperienceSearch);
+    experienceToInput.addEventListener('input', handleExperienceSearch);
+
+    // Добавление обработчика события на изменение значения в выпадающем списке
+    const languageSelect = document.getElementById('language');
+    languageSelect.addEventListener('change', handleLanguageSearch);
+
+    fillLanguagesSelect(guidesData);
+
+    // document.getElementById("view-order-btn").addEventListener("click", function() {
+    //     guidesData.forEach(guide => {
+    //         if (guideId == guide.id) {
+    //             calculateExcursionCost(guide.pricePerHour, selectedValue);
+    //         }
+    //     });
+        
+    // })
 }
 
 
@@ -539,8 +669,94 @@ async function guideTable() {
 
 
 
+function calculateExcursionPrice() {
+    const hoursSelect = document.getElementById('excursionDuration');
+    const selectedOption = hoursSelect.options[hoursSelect.selectedIndex];
+    const hoursNumber = selectedOption.value; // Длительность экскурсии в часах
+
+    const guideServiceCost = selectedData[1].pricePerHour; // Стоимость услуг гида за один час
 
 
+    function calculateIsThisDayOff(excursionDate) {
+        const date = new Date(excursionDate);
+        const dayOfWeek = date.getDay(); 
+
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+            return 1.5; // Праздничные и выходные дни
+        } else {
+            return 1; // Будний день
+        }
+    }
+
+    const excursionDateInput = document.getElementById('excursionDate');
+    const excursionDate = excursionDateInput.value;
+    const isThisDayOff = calculateIsThisDayOff(excursionDate); // Множитель для праздничных и выходных дней
+
+
+    function calculateTimeBonuses(excursionTime) {
+        const time = new Date(`2000-01-01T${excursionTime}`);
+        const hours = time.getHours();
+
+        let isItMorning = 0;
+        let isItEvening = 0;
+
+        if (hours >= 9 && hours < 12) { isItMorning = 400; }
+
+        if (hours >= 20 && hours < 23) { isItEvening = 1000; }
+
+        return { isItMorning, isItEvening };
+    }
+
+    const excursionTimeInput = document.getElementById('excursionTime');
+    const excursionTime = excursionTimeInput.value;
+    const { isItMorning, isItEvening } = calculateTimeBonuses(excursionTime); // Надбавка за раннее или вечернее время экскурсии
+
+
+    function calculateVisitorsBonus(groupSize) {
+        let numberOfVisitors = 0;
+
+        if (groupSize >= 1 && groupSize <= 5) {
+            numberOfVisitors = 0;
+        } else if (groupSize > 5 && groupSize <= 10) {
+            numberOfVisitors = 1000;
+        } else if (groupSize > 10 && groupSize <= 20) {
+            numberOfVisitors = 1500;
+        }
+
+        return numberOfVisitors;
+    }
+
+    const groupSizeInput = document.getElementById('groupSize');
+    const groupSize = parseInt(groupSizeInput.value);
+    const visitorsBonus = calculateVisitorsBonus(groupSize); // Количество посетителей экскурсии
+
+
+    const discountCheckbox = document.getElementById('discountCheckbox');
+    const souvenirCheckbox = document.getElementById('souvenirCheckbox');
+
+    const hasDiscount = discountCheckbox.checked;
+    const hasSouvenirs = souvenirCheckbox.checked;
+    const numberOfVisitors = calculateVisitorsBonus(groupSize);
+
+    console.log(guideServiceCost, hoursNumber, isThisDayOff, isItMorning, isItEvening, numberOfVisitors)
+
+    let price = guideServiceCost * hoursNumber * isThisDayOff + isItMorning + isItEvening + numberOfVisitors;
+
+    // Скидка для школьников и студентов
+    if (hasDiscount) {
+        price *= 0.85;
+    }
+
+    // Стоимость тематических сувениров
+    if (hasSouvenirs) {
+        const souvenirCostPerVisitor = 500;
+        price += souvenirCostPerVisitor * groupSize;
+    }
+
+    // Обновляем отображение стоимости на странице или используем значение по вашему усмотрению  
+    var totalCostInput = document.getElementById('totalCost');
+    totalCostInput.value = price;
+}
 
 
 
@@ -551,3 +767,79 @@ async function guideTable() {
 routeTable();
 
 guideTable();
+
+
+
+
+// Обработчики событий
+document.getElementById('excursionDate').addEventListener('change', calculateExcursionPrice);
+document.getElementById('excursionTime').addEventListener('change', calculateExcursionPrice);
+document.getElementById('excursionDuration').addEventListener('change', calculateExcursionPrice);
+document.getElementById('groupSize').addEventListener('change', calculateExcursionPrice);
+document.getElementById('discountCheckbox').addEventListener('click', calculateExcursionPrice);
+document.getElementById('souvenirCheckbox').addEventListener('click', calculateExcursionPrice);
+
+
+
+
+
+// Функция для отправки POST-запроса
+async function sendPostRequest() {
+    const orderForm = document.getElementById('order-form');
+
+    orderForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Предотвращаем стандартное поведение формы (отправку)
+
+        // Собираем данные из формы
+        const formData = {
+            date: document.getElementById('excursionDate').value,
+            duration: parseInt(document.getElementById('excursionDuration').value),
+            guide_id: selectedData[1].id,
+            id: selectedData[0].id + selectedData[1].id,
+            optionFirst: document.getElementById('discountCheckbox').checked,
+            optionSecond: document.getElementById('souvenirCheckbox').checked,
+            persons: parseInt(document.getElementById('groupSize').value),
+            price: Math.round(parseFloat(document.getElementById('totalCost').value)),
+            route_id: selectedData[0].id,
+            student_id: 34,
+            time: document.getElementById('excursionTime').value
+        };
+        console.log(formData);
+
+        // Отправляем POST-запрос
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                // Обрабатываем результат выполнения операции (data.newItem)
+                console.log(data.newItem);
+
+                // Показываем уведомление пользователю
+                alert('Заявка успешно отправлена!');
+            } else {
+                console.error('Ошибка при отправке запроса:', xhr.statusText);
+                // Показываем уведомление об ошибке
+                alert('Произошла ошибка при отправке запроса. Пожалуйста, попробуйте ещё раз.');
+            }
+        };
+        xhr.onerror = function () {
+            console.error('Ошибка при отправке запроса:', xhr.statusText);
+            // Показываем уведомление об ошибке
+            alert('Произошла ошибка при отправке запроса. Пожалуйста, попробуйте ещё раз.');
+        };
+        xhr.send(JSON.stringify(formData));
+    });
+}
+
+// Вызовите функцию при нажатии на кнопку "Отправить"
+document.getElementById('view-order-btn').addEventListener('click', sendPostRequest);
+
+
+
+
+
+
+
+

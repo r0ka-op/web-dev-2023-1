@@ -147,8 +147,10 @@ h3, h2 {
 }
 
 .modal__box {
+    width: auto;
+    height: auto;
     position: relative;
-    max-width: 500px;
+    max-width: 700px;
     padding: 45px;
     z-index: 1;
     margin: 30px 15px;
@@ -190,10 +192,12 @@ h3, h2 {
 }
 /* ===== */
 
+
+
 /* Стили для нового модального окна подтверждения отмены */
 #cancel-confirmation-modal .modal__box {
     position: relative;
-    max-width: 300px; /* Примерное значение, подберите под свой дизайн */
+    max-width: 300px; 
     padding: 20px;
     z-index: 101;
     margin: 30px auto; /* Центрируем по горизонтали */
