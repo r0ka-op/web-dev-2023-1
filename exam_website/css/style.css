@@ -107,9 +107,6 @@ h3, h2 {
     /* background: rgb(0, 255, 162); */
 }
 
-.selected {
-    background-color: #ffc999; 
-}
 
 .selected .choose-button {
     background-color: gray;

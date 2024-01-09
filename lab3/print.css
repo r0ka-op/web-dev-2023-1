@@ -1,0 +1,22 @@
+body {
+    font-family: 'Comfortaa', cursive;
+    font-family: 'Sofia Sans', sans-serif;
+}
+
+header, nav, footer, figure, table, th, td, .btn {
+    display: none;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.header, .sidenav, .main, .footer, .avatar, .text-center, main, p, h1, h2 {
+    display: block;
+}

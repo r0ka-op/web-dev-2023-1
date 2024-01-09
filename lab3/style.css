@@ -6,7 +6,15 @@ body {
 
 main {
     margin-bottom: 100px;
+    flex: 1;
 }
+
+.main-menu {
+    display: flex;
+    align-items: center;
+}
+
+
 
 .main-menu ul {
     position: absolute;
@@ -27,12 +35,15 @@ main {
 }
 
 .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: sticky;
     top: -3.2em;
     z-index: 2;
     background-color: black;
     color: white;
-    padding: 40px 0 10px 0;
+    padding: 65px 0 10px 0;
     font-size: 1.25rem;
     font-weight: bold;
     background-image: url(images/background.gif);
@@ -41,6 +52,7 @@ main {
 }
 
 .container {
+    display: flex;
     max-width: 75%;
     margin: 0 auto;
     position: relative;
@@ -93,6 +105,9 @@ p {
 }
 
 .footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position:fixed;
     left:0px;
     bottom:0px;
@@ -154,6 +169,7 @@ th, td {
 }
 
 .text-center {
+    flex: 1;
     text-align: center;
 }
 

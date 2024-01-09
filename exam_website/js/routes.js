@@ -168,10 +168,10 @@ async function routeTable() {
 
         if (selectedRoute) {
             clearSelection();
-            row.classList.add('selected');
+            row.classList.add('table-primary');
             selectedData = [selectedRoute];
             const chooseButton = row.querySelector('.choose-button');
-            chooseButton.classList.add('selected');
+            chooseButton.classList.add('selectedBtn');
             chooseButton.textContent = 'Выбрано';
             localStorage.setItem('selectedRoute', JSON.stringify(selectedData)); // Сохраняем выбранный маршрут в localStorage
             updateRouteNameInTitle();
@@ -193,7 +193,7 @@ async function routeTable() {
             // Найти строку маршрута по id и выделить ее
             const selectedRow = document.querySelector(`[data-route-id="${selectedRoute.id}"]`);
             if (selectedRow) {
-                selectedRow.classList.add('selected');
+                selectedRow.classList.add('table-primary');
                 updateRouteNameInTitle();
             }
         }
@@ -201,17 +201,17 @@ async function routeTable() {
 
     // Функция для отмены выбора предыдущего маршрута
     function clearSelection() {
-        const selectedRows = document.querySelectorAll('.selected');
+        const selectedRows = document.querySelectorAll('.table-primary');
         
         // Проверяем, есть ли выбранные строки
         if (selectedRows.length > 0) {
             selectedRows.forEach(selectedRow => {
-                selectedRow.classList.remove('selected');
+                selectedRow.classList.remove('table-primary');
                 const chooseButton = selectedRow.querySelector('.choose-button');
 
                 // Проверяем, есть ли кнопка в выбранной строке
                 if (chooseButton) {
-                    chooseButton.classList.remove('selected');
+                    chooseButton.classList.remove('selectedBtn');
                     chooseButton.textContent = 'Выбрать';
                 }
             });

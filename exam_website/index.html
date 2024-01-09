@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Название вашего сайта</title>
-    <!-- Подключение Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css  ">
 </head>
 
@@ -18,7 +17,7 @@
             <h1>Логотип</h1>
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand" href="#">Главная</a>
-                <a class="navbar-brand" href="#">Личный кабинет</a>
+                <a class="navbar-brand" href="personal-account.html">Личный кабинет</a>
             </nav>
         </div>
     </header>
@@ -114,26 +113,28 @@
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-sm" id="route-table">
-                <div class="table-responsive">
-                    <table class="table table-rounded">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Название</th>
-                                <th scope="col">Описание</th>
-                                <th scope="col">Основные объекты</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="route-table-body">
-                            <!-- Здесь будут добавлены строки с данными маршрутов -->
-                        </tbody>
-                    </table>
+        <div class="container">
+            <div class="row">
+                <div class="col" id="route-table">
+                    <div class="table-responsive">
+                        <table class="table rounded table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Название</th>
+                                    <th scope="col">Описание</th>
+                                    <th scope="col">Основные объекты</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="route-table-body">
+                                <!-- Здесь будут добавлены строки с данными маршрутов -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>                     
-
+        </div>
+        
 
         <div class="row">
             <div class="col-md-12" id="pagination" >
@@ -181,50 +182,53 @@
             </div>  
         </div>
         
-        <div class="row">
-            <div class="col-sm" id="guides-table">
-                <div class="table-responsive">
-                    <table class="table table-rounded">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">ФИО</th>
-                                <th scope="col">Языки</th>
-                                <th scope="col">Опыт работы</th>
-                                <th scope="col">Стоимость услуги в час</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
-                                <td>ФИО</td>
-                                <td>язык</td>
-                                <td>объект, объект</td>
-                                <td>стоимость/час</td>
-                                <td><button class="btn btn-primary" id="open-modal-btn1">Оформить заявку</button></td>
-                            </tr>
-                            <tr>
-                                <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
-                                <td>ФИО</td>
-                                <td>язык, язык</td>
-                                <td>объект, объект</td>
-                                <td>стоимость/час</td>
-                                <td><button class="btn btn-primary" id="open-modal-btn2">Оформить заявку</button></td>
-                            </tr>
-                            <tr>
-                                <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
-                                <td>ФИО</td>
-                                <td>язык, язык, язык</td>
-                                <td>объект, объект</td>
-                                <td>стоимость/час</td>
-                                <td><button class="btn btn-primary" id="open-modal-btn3">Оформить заявку</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="container">
+            <div class="row">
+                <div class="col" id="guides-table">
+                    <div class="table-responsive">
+                        <table class="table rounded table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">ФИО</th>
+                                    <th scope="col">Языки</th>
+                                    <th scope="col">Опыт работы</th>
+                                    <th scope="col">Стоимость услуги в час</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
+                                    <td>ФИО</td>
+                                    <td>язык</td>
+                                    <td>объект, объект</td>
+                                    <td>стоимость/час</td>
+                                    <td><button class="btn btn-primary" id="open-modal-btn1">Оформить заявку</button></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
+                                    <td>ФИО</td>
+                                    <td>язык, язык</td>
+                                    <td>объект, объект</td>
+                                    <td>стоимость/час</td>
+                                    <td><button class="btn btn-primary" id="open-modal-btn2">Оформить заявку</button></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="files/free-icon-avatar-7236095.png" width="40" alt="Фото гида"></td>
+                                    <td>ФИО</td>
+                                    <td>язык, язык, язык</td>
+                                    <td>объект, объект</td>
+                                    <td>стоимость/час</td>
+                                    <td><button class="btn btn-primary" id="open-modal-btn3">Оформить заявку</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+        
 
         <div class="row">
             <div class="col-md-12">
@@ -247,105 +251,72 @@
 
 
 
-   <!-- Блок с кнопкой "Оформить заявку" -->
-    <div class="modal" id="my-modal">
-        <div class="modal__box">
-            <button class="modal__close-btn" id="close-my-modal-btn">
-                <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
-                        fill="#333333" />
-                    <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
-                </svg>
-            </button>
-            <h2>Оформление заявки</h2>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Оформление заявки</h2>
+                    <button class="modal__close-btn" data-dismiss="modal" aria-label="close" id="close-my-modal-btn"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Добавленная форма для оформления заявки -->
+                    <form id="order-form">
+                        <div class="form-group">
+                            <label for="routeName">Название маршрута:</label>
+                            <input type="text" class="form-control" id="routeName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="guideName">ФИО гида:</label>
+                            <input type="text" class="form-control" id="guideName" readonly>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="excursionDate">Дата экскурсии:</label>
+                                <input type="date" class="form-control" id="excursionDate">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="excursionTime">Время начала:</label>
+                                <input type="time" class="form-control" id="excursionTime" min="09:00" max="23:00" step="1800">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="excursionDuration">Длительность:</label>
+                                <select class="form-control" id="excursionDuration" required>
+                                    <option value="1">1 час</option>
+                                    <option value="2">2 часа</option>
+                                    <option value="3">3 часа</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="groupSize">Количество человек в группе:</label>
+                            <input type="number" class="form-control" id="groupSize" required>
+                        </div>
 
-            <!-- Добавленная форма для оформления заявки -->
-            <form id="order-form">
-                <div class="form-group">
-                    <label for="routeName">Название маршрута:</label>
-                    <input type="text" class="form-control" id="routeName" readonly>
+                        <!-- Дополнительные опции -->
+                        <div class="form-group">
+                            <label>Дополнительные опции заказа:</label>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="discountCheckbox">
+                                <label for="discountCheckbox">Скидка для школьников и студентов</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" class="form-check-input" id="souvenirCheckbox">
+                                <label for="souvenirCheckbox">Тематические сувениры</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="totalCost">Итоговая стоимость:</label>
+                            <input type="text" class="form-control" id="totalCost" readonly>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="guideName">ФИО гида:</label>
-                    <input type="text" class="form-control" id="guideName" readonly>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="view-order-btn">Отправить</button>
+                    <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="cancel-btn">Отменить</button>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="excursionDate">Дата экскурсии:</label>
-                        <input type="date" class="form-control" id="excursionDate">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="excursionTime">Время начала:</label>
-                        <input type="time" class="form-control" id="excursionTime" min="09:00" max="23:00" step="1800">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="excursionDuration">Длительность:</label>
-                        <select class="form-control" id="excursionDuration" required>
-                            <option value="1">1 час</option>
-                            <option value="2">2 часа</option>
-                            <option value="3">3 часа</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="groupSize">Количество человек в группе:</label>
-                    <input type="number" class="form-control" id="groupSize" required>
-                </div>
-
-                <!-- Дополнительные опции -->
-                <div class="form-group">
-                    <label>Дополнительные опции заказа:</label>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input" id="discountCheckbox">
-                        <label for="discountCheckbox">Скидка для школьников и студентов</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input" id="souvenirCheckbox">
-                        <label for="souvenirCheckbox">Тематические сувениры</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="totalCost">Итоговая стоимость:</label>
-                    <input type="text" class="form-control" id="totalCost" readonly>
-                </div>
-                <button type="submit" class="btn btn-primary" id="view-order-btn">Отправить</button>
-                <button type="button" class="btn btn-secondary" id="cancel-btn">Отменить</button>
-            </form>
-        </div>
-    </div>
-
-    
-    <!-- Модальное окно для подтверждения отмены заявки -->
-    <div class="modal" id="cancel-confirmation-modal">
-        <div class="modal__box">
-            <h2>Подтверждение отмены заявки</h2>
-            <p>Вы уверены, что хотите отменить заявку?</p>
-            <button class="btn btn-primary" id="confirm-cancel-btn">Да</button>
-            <button class="btn btn-secondary" id="close-cancel-btn">Нет</button>
-        </div>
-    </div>
-
-
-    <!-- Модальное окно для просмотра заявки -->
-    <div class="modal" id="view-order-modal">
-        <div class="modal__box">
-            <button class="modal__close-btn" id="close-view-request-btn">
-                <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
-                        fill="#333333" />
-                    <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
-                </svg>
-            </button>
-            <h2>Просмотр заявки</h2>
-            <div id="order-details">
-                <!-- Здесь будет отображаться информация из формы -->
             </div>
-            <button class="btn btn-secondary" id="close-view-order-btn">Закрыть</button>
         </div>
     </div>
-
-
-
 
     <!-- Футер -->
     <footer class="bg-light text-center py-3 mt-3">
@@ -358,9 +329,7 @@
     <script defer src="js/routes.js"></script>
 
     <!-- Подключение Bootstrap JS (необходим для работы модальных окон и других компонентов) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
