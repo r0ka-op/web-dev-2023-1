@@ -8,6 +8,7 @@ async function fetchData() {
 
         if (!response.ok) {
             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+            showErrorNotification(response.statusText);
         }
 
         const data = await response.json();
@@ -26,6 +27,7 @@ async function fetchRoute(routeId) {
 
         if (!response.ok) {
             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+            showErrorNotification(response.statusText);
         }
 
         const routeData = await response.json();
@@ -34,6 +36,49 @@ async function fetchRoute(routeId) {
         console.error('Ошибка при получении данных о маршруте:', error.message);
     }
 }
+
+
+
+// Функция для отображения уведомления об успешном удалении
+function showDeleteSuccessNotification() {
+    const successAlert = document.getElementById('delete-success-alert');
+    successAlert.classList.remove('fade');
+    successAlert.classList.add('show');
+
+    // Скрыть уведомление через 3 секунды
+    setTimeout(() => {
+        successAlert.classList.add('fade');
+        successAlert.classList.remove('show');
+    }, 3000);
+}
+
+// Функция для отображения уведомления об успешном редактировании
+function showEditSuccessNotification() {
+    const successAlert = document.getElementById('edit-success-alert');
+    successAlert.classList.remove('fade');
+    successAlert.classList.add('show');
+
+    setTimeout(() => {
+        successAlert.classList.add('fade');
+        successAlert.classList.remove('show');
+    }, 3000);
+}
+
+// Функция для отображения уведомления об ошибке
+function showErrorNotification(message) {
+    const errorAlert = document.getElementById('error-alert');
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message;
+    errorAlert.classList.remove('fade');
+    errorAlert.classList.add('show');
+
+    setTimeout(() => {
+        errorAlert.classList.add('fade');
+        errorAlert.classList.remove('show');
+    }, 5000);
+}
+
+
 
 
 async function OrdersTable() {
@@ -57,10 +102,30 @@ async function OrdersTable() {
 
     // Функция для отображения модального окна подтверждения удаления
     function showModalDelete(order) {
-        // Здесь добавьте код для создания и отображения модального окна подтверждения удаления
-        // Используйте данные из объекта `order` для отображения информации о заявке
-        console.log("Удаление:", order);
-    }
+        // Находим кнопку "Да" в модальном окне
+        const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+
+        // Добавляем обработчик события для кнопки "Да"
+        confirmCancelBtn.addEventListener('click', async () => {
+            // Выполняем DELETE запрос к API
+            const deleteUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders/${order.id}?api_key=${api_key}`;
+            try {
+                const response = await fetch(deleteUrl, { method: 'DELETE' });
+
+                if (!response.ok) {
+                    throw new Error(`Ошибка при удалении заявки: ${response.status} ${response.statusText}`);
+                    showErrorNotification(response.statusText);
+                }
+
+                console.log('Заявка успешно удалена');
+                showDeleteSuccessNotification();
+                refreshTable();
+            } catch (error) {
+                console.error('Ошибка при удалении заявки:', error.message);
+            }
+        });
+            console.log("Удаление:", order);
+        }
 
     async function fillOrdersTable(data) {
         const tableBody = document.getElementById('orders-table').getElementsByTagName('tbody')[0];
@@ -109,108 +174,12 @@ async function OrdersTable() {
     }
 
 
-
-
-    // Функция для обработки клика на кнопке "раскрыть описание"
-    function expandDescription(descriptionCell, fullDescription, routeId) {
-        descriptionCell.innerHTML = fullDescription;
-
-        // Добавляем кнопку "скрыть описание"
-        const collapseButton = document.createElement('button');
-        collapseButton.textContent = 'Скрыть текст';
-        collapseButton.classList.add('expand-button');
-        collapseButton.addEventListener('click', () => collapseDescription(descriptionCell, fullDescription, routeId));
-        descriptionCell.appendChild(collapseButton);
-
-        // Прокручиваем к строке с заданным routeId
-        const selectedRow = document.querySelector(`[data-route-id="${routeId}"]`);
-        if (selectedRow) {
-            selectedRow.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    // Функция для обновления таблицы
+    async function refreshTable() {
+        const postsData = await fetchData('http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes');
+        fillOrdersTable(postsData);
     }
 
-    // Функция для обработки клика на кнопке "скрыть описание"
-    function collapseDescription(descriptionCell, truncatedDescription, routeId) {
-        // Очищаем содержимое ячейки
-        descriptionCell.textContent = truncatedDescription.substring(0, 127) + '...';
-    
-        // Добавляем кнопку "раскрыть описание"
-        const expandButton = document.createElement('button');
-        expandButton.textContent = 'Раскрыть тест';
-        expandButton.classList.add('expand-button');
-        expandButton.addEventListener('click', () => expandDescription(descriptionCell, truncatedDescription, routeId));
-        descriptionCell.appendChild(expandButton);
-    }
-    
-
-    // Функция для обновления текста в блоке с названием маршрута
-    function updateRouteNameInTitle() {
-        const routeNameElement = document.getElementById('route-name-h4');
-
-        if (JSON.parse(localStorage.getItem('selectedRoute'))[0].name.length > 0) {
-            routeNameElement.textContent = JSON.parse(localStorage.getItem('selectedRoute'))[0].name;
-        } else {
-            routeNameElement.textContent = 'Название маршрута';
-        }
-    }
-
-    // Функция для обработки выбора маршрута
-    function selectRoute(routeId, row) {
-        const selectedRoute = data.find(route => route.id === routeId);
-
-        if (selectedRoute) {
-            clearSelection();
-            row.classList.add('table-primary');
-            selectedData = [selectedRoute];
-            const chooseButton = row.querySelector('.choose-button');
-            chooseButton.classList.add('selectedBtn');
-            chooseButton.textContent = 'Выбрано';
-            localStorage.setItem('selectedRoute', JSON.stringify(selectedData)); // Сохраняем выбранный маршрут в localStorage
-            updateRouteNameInTitle();
-            // Обновляем таблицу гидов при выборе нового маршрута
-            guideTable();
-            loadSelectedRouteOnPageLoad();
-            console.log('Выбранный маршрут:', selectedRoute);
-        } else {
-            console.error(`Маршрут с id ${routeId} не найден в данных.`);
-        }
-    }
-
-    
-
-    // Функция для загрузки выбранного маршрута при загрузке страницы
-    function loadSelectedRouteOnPageLoad() {
-        const selectedRoute = JSON.parse(localStorage.getItem('selectedRoute'))[0];
-        if (selectedRoute.id) {
-            // Найти строку маршрута по id и выделить ее
-            const selectedRow = document.querySelector(`[data-route-id="${selectedRoute.id}"]`);
-            if (selectedRow) {
-                selectedRow.classList.add('table-primary');
-                updateRouteNameInTitle();
-            }
-        }
-    }
-
-    // Функция для отмены выбора предыдущего маршрута
-    function clearSelection() {
-        const selectedRows = document.querySelectorAll('.table-primary');
-        
-        // Проверяем, есть ли выбранные строки
-        if (selectedRows.length > 0) {
-            selectedRows.forEach(selectedRow => {
-                selectedRow.classList.remove('table-primary');
-                const chooseButton = selectedRow.querySelector('.choose-button');
-
-                // Проверяем, есть ли кнопка в выбранной строке
-                if (chooseButton) {
-                    chooseButton.classList.remove('selectedBtn');
-                    chooseButton.textContent = 'Выбрать';
-                }
-            });
-            selectedData = [];
-        }
-    }
-    
 
 
     // Функция для заполнения пагинации
@@ -264,27 +233,7 @@ async function OrdersTable() {
         console.log(`Страница ${currentPage}`);
     }
 
-    // Функция для обновления пагинации
-    function updatePagination() {
-        const paginationList = document.getElementById('pagination-list-routes');
-        paginationList.innerHTML = '';
-    }
-
-    // Функция для обработки ввода в текстовое поле поиска
-    function handleSearch() {
-        const input = document.getElementById('route-name');
-        const inputValue = input.value.toLowerCase();
-
-        // Фильтрация данных по названию и достопримечательности
-        const filteredRoutes = postsData.filter(route =>
-            route.name.toLowerCase().includes(inputValue)
-        );
-
-        // Вызываем функцию для обновления таблицы с учетом отфильтрованных данных
-        fillRouteTable(filteredRoutes, rows, currentPage);
-        fillPagination(filteredRoutes, rows);
-        loadSelectedRouteOnPageLoad();
-    }
+   
         
     fillOrdersTable(postsData);
     // fillPagination(postsData, rows);

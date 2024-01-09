@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -29,11 +29,17 @@
 
     <!-- Область для всплывающих уведомлений -->
     <div class="container mt-4">
-        <div class="alert alert-success" role="alert">
-            Успешное уведомление!
+        <div id="delete-success-alert" class="alert alert-success fade" role="alert" style="display: none;">
+            Заявка успешно удалена!
         </div>
-        <!-- Добавьте другие уведомления по необходимости -->
+        <div id="edit-success-alert" class="alert alert-success fade" role="alert" style="display: none;">
+            Заявка успешно отредактирована!
+        </div>
+        <div id="error-alert" class="alert alert-danger fade" role="alert" style="display: none;">
+            Произошла ошибка: <span id="error-message"></span>
+        </div>
     </div>
+
 
     <!-- Таблица с данными заявок -->
     <div class="container mt-4">
@@ -58,7 +64,7 @@
     <div class="container mt-4">
         <nav aria-label="Page navigation">
             <ul class="pagination" id="pagination-list">
-                <!-- Добавьте страницы по необходимости -->
+                <!-- Здесь будут страницы при необходимости -->
             </ul>
         </nav>
     </div>
@@ -73,7 +79,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Подтверждение удаления заявки</h2>
-                    <button class="modal__close-btn" data-dismiss="modal" aria-label="close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Вы уверены, что хотите отменить заявку?</p>
@@ -93,7 +99,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Просмотр заявки</h2>
-                    <button class="modal__close-btn" data-dismiss="modal" aria-label="close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="order-details">

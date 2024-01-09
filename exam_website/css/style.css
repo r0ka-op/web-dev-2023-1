@@ -6,14 +6,7 @@ h3, h2 {
     margin: auto;
 }
 
-#description {
-    /* background: rgb(0, 255, 208); */
-}
-
 #advantages img {
-    /* width: 263px;
-    height: 393px; */
-    /* background: red; */
     margin: auto;
 }
 
@@ -28,16 +21,8 @@ h3, h2 {
     background: rgb(255, 0, 195);
 }
 
-#routes {
-    /* background: rgb(157, 255, 0); */
-}
-
 #route-title {
     width: auto;
-}
-
-#route-search, #route-list {
-    /* background: red; */
 }
 
 #landmark, #guides {
@@ -49,10 +34,6 @@ h3, h2 {
     border: 2px solid #924141;
 }
 
-#route-table, #guides-table {
-    /* background: red; */
-}
-
 .table-rounded {
     border-radius: 10px;
     overflow: hidden;
@@ -62,28 +43,8 @@ h3, h2 {
     text-align: center;
 }
 
-#routes-form {
-    /* background: rgb(0, 102, 255); */
-}
-
-.arrow-left {
-    transform: scaleX(-1);
-    display: inline-block;
-}
-
 .pagination {
-    /* background: rgb(153, 0, 255); */
     margin-top: 10px;
-}
-
-#guides-list {
-    /* background: rgb(255, 0, 111); */
-}
-
-#guides-form {
-    /* width: 263px;
-    height: 393px; */
-    /* background: rgb(212, 255, 0); */
 }
 
 #guides-search-experience label {
@@ -103,15 +64,10 @@ h3, h2 {
     padding: auto;
 }
 
-#btn {
-    /* background: rgb(0, 255, 162); */
-}
-
-
 .selected .choose-button {
     background-color: gray;
     color: white;
-    pointer-events: none; /* Это предотвратит активацию кнопки после выбора */
+    pointer-events: none;
 }
 
 .form-group button {
@@ -122,110 +78,4 @@ h3, h2 {
 /* Стиль для скрытых описаний */
 .description-cell.hidden {
     display: none;
-}
-
-/* Общие свойства модальных окон */
-
-.modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 100;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.4s, visibility 0.4s;
-}
-
-.modal__box {
-    width: auto;
-    height: auto;
-    position: relative;
-    max-width: 700px;
-    padding: 45px;
-    z-index: 1;
-    margin: 30px 15px;
-    background-color: white;
-    box-shadow: 0 0 17px -7px rgba(34, 60, 80, 0.2);
-    transform: scale(0);
-    transition: transform 0.8s;
-}
-
-.modal__close-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    border: none;
-    background-color: transparent;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.modal__close-btn svg path {
-    transition: fill 0.4s;
-}
-
-.modal__close-btn:hover svg path {
-    fill: blue;
-}
-
-.modal__close-btn:active svg path {
-    fill: rgb(186, 53, 0);
-}
-
-.modal.open {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal.open .modal__box {
-    transform: scale(1);
-}
-/* ===== */
-
-
-
-/* Стили для нового модального окна подтверждения отмены */
-#cancel-confirmation-modal .modal__box {
-    position: relative;
-    max-width: 300px; 
-    padding: 20px;
-    z-index: 101;
-    margin: 30px auto; /* Центрируем по горизонтали */
-    background-color: white;
-    box-shadow: 0 0 17px -7px rgba(34, 60, 80, 0.2);
-    transform: scale(0);
-    transition: transform 0.8s;
-}
-
-#cancel-confirmation-modal .modal__close-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    border: none;
-    background-color: transparent;
-    padding: 5px;
-    cursor: pointer;
-}
-
-#cancel-confirmation-modal .modal__close-btn svg path {
-    transition: fill 0.4s;
-}
-
-#cancel-confirmation-modal .modal__close-btn:hover svg path {
-    fill: blue;
-}
-
-#cancel-confirmation-modal .modal__close-btn:active svg path {
-    fill: rgb(186, 53, 0);
-}
-
-#cancel-confirmation-modal.open .modal__box {
-    transform: scale(1);
 }

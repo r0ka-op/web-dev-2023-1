@@ -3,37 +3,37 @@
 // //     document.getElementById("my-modal").classList.add("open")
 // // })
 
-// Закрыть модальное окно при нажатии на Esc
-window.addEventListener('keydown', (e) => {
-    if (e.key === "Escape") {
-        document.getElementById('cancel-confirmation-modal').classList.add('open');
-    }
-});
+// // Закрыть модальное окно при нажатии на Esc
+// window.addEventListener('keydown', (e) => {
+//     if (e.key === "Escape") {
+//         document.getElementById('cancel-confirmation-modal').classList.add('open');
+//     }
+// });
 
-// Закрыть модальное окно при клике вне его
-document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
-    event._isClickWithInModal = true;
-});
-document.getElementById("my-modal").addEventListener('click', event => {
-    if (event._isClickWithInModal) return;
-    document.getElementById('cancel-confirmation-modal').classList.add('open');
-});
+// // Закрыть модальное окно при клике вне его
+// document.querySelector("#my-modal .modal__box").addEventListener('click', event => {
+//     event._isClickWithInModal = true;
+// });
+// document.getElementById("my-modal").addEventListener('click', event => {
+//     if (event._isClickWithInModal) return;
+//     document.getElementById('cancel-confirmation-modal').classList.add('open');
+// });
 
-// Дополнительное модальное окно
-document.getElementById('cancel-btn').addEventListener('click', function () {
-    document.getElementById('cancel-confirmation-modal').classList.add('open');
-});
+// // Дополнительное модальное окно
+// document.getElementById('cancel-btn').addEventListener('click', function () {
+//     document.getElementById('cancel-confirmation-modal').classList.add('open');
+// });
 
-// Нажание на кнопку подтверждения отмены
-document.getElementById('close-cancel-btn').addEventListener('click', function () {
-    document.getElementById('cancel-confirmation-modal').classList.remove('open');
-});
+// // Нажание на кнопку подтверждения отмены
+// document.getElementById('close-cancel-btn').addEventListener('click', function () {
+//     document.getElementById('cancel-confirmation-modal').classList.remove('open');
+// });
 
-// Нажание на кнопку принятия отмены
-document.getElementById('confirm-cancel-btn').addEventListener('click', function () {
-    document.getElementById('cancel-confirmation-modal').classList.remove('open');
-    document.getElementById("my-modal").classList.remove("open");
-});
+// // Нажание на кнопку принятия отмены
+// document.getElementById('confirm-cancel-btn').addEventListener('click', function () {
+//     document.getElementById('cancel-confirmation-modal').classList.remove('open');
+//     document.getElementById("my-modal").classList.remove("open");
+// });
 
 
 // Обработчик на кнопку "Просмотреть заявку"
@@ -59,8 +59,8 @@ document.getElementById('confirm-cancel-btn').addEventListener('click', function
 //     document.getElementById('view-order-modal').classList.add('open');
 // });
 
-// Обработчик на кнопки "Закрыть" в модальном окне просмотра заявки
-document.getElementById('close-view-order-btn').addEventListener('click', function() {
-    document.getElementById('view-order-modal').classList.remove('open');
-});
+// // Обработчик на кнопки "Закрыть" в модальном окне просмотра заявки
+// document.getElementById('close-view-order-btn').addEventListener('click', function() {
+//     document.getElementById('view-order-modal').classList.remove('open');
+// });
 

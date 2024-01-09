@@ -490,7 +490,6 @@ async function guideTable() {
 
      // Функция для обработки выбора гида
     function selectGuide(guideId) {
-        document.getElementById("my-modal").classList.add("open");
         const routeNameElement = document.getElementById('routeName');
         const guideNameElement = document.getElementById('guideName');
         
@@ -538,6 +537,8 @@ async function guideTable() {
             priceCell.textContent = guide.pricePerHour;
             chooseButton.textContent = 'Оформить заявку';
             chooseButton.classList.add('btn', 'btn-primary');
+            chooseButton.setAttribute('data-bs-toggle', 'modal');
+            chooseButton.setAttribute('data-bs-target', '#formModal');
             chooseButton.addEventListener('click', () => selectGuide(guide.id));
 
             row.appendChild(photoCell);
@@ -795,13 +796,11 @@ async function sendPostRequest() {
             date: document.getElementById('excursionDate').value,
             duration: parseInt(document.getElementById('excursionDuration').value),
             guide_id: selectedData[1].id,
-            id: selectedData[0].id + selectedData[1].id,
             optionFirst: document.getElementById('discountCheckbox').checked,
             optionSecond: document.getElementById('souvenirCheckbox').checked,
             persons: parseInt(document.getElementById('groupSize').value),
             price: Math.round(parseFloat(document.getElementById('totalCost').value)),
             route_id: selectedData[0].id,
-            student_id: 34,
             time: document.getElementById('excursionTime').value
         };
         console.log(formData);
