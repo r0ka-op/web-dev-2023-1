@@ -406,7 +406,7 @@ async function guideTable() {
 
         if (guidesData.length > 0) {
             fillGuidesTable(guidesData, rows, currentPage);
-            fillGuidesPagination(guidesData, rows, currentPage); // передаем currentPage в функцию fillGuidesPagination
+            fillGuidesPagination(guidesData, rows, currentPage); 
             setupGuidesPaginationEvent(guidesData, rows);
         } else {
             // Обработка случая, когда нет доступных гидов
@@ -781,16 +781,36 @@ document.getElementById('discountCheckbox').addEventListener('click', calculateE
 document.getElementById('souvenirCheckbox').addEventListener('click', calculateExcursionPrice);
 
 
+// Функция для отображения уведомления об успешном оформлении заказа
+function showPostSuccessNotification() {
+    const successAlert = document.getElementById('зщые-success-alert');
+    successAlert.classList.remove('fade');
+    successAlert.classList.add('show');
 
+    setTimeout(() => {
+        successAlert.classList.add('fade');
+        successAlert.classList.remove('show');
+    }, 3000);
+}
+
+// Функция для отображения уведомления об ошибке
+function showErrorNotification(message) {
+    const errorAlert = document.getElementById('error-alert');
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message;
+    errorAlert.classList.remove('fade');
+    errorAlert.classList.add('show');
+
+    setTimeout(() => {
+        errorAlert.classList.add('fade');
+        errorAlert.classList.remove('show');
+    }, 5000);
+}
 
 
 // Функция для отправки POST-запроса
 async function sendPostRequest() {
-    const orderForm = document.getElementById('order-form');
-
-    orderForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Предотвращаем стандартное поведение формы (отправку)
-
+    document.getElementById('view-order-btn').addEventListener('click', function() {
         // Собираем данные из формы
         const formData = {
             date: document.getElementById('excursionDate').value,
@@ -804,7 +824,7 @@ async function sendPostRequest() {
             time: document.getElementById('excursionTime').value
         };
         console.log(formData);
-
+    
         // Отправляем POST-запрос
         const xhr = new XMLHttpRequest();
         xhr.open('POST', `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`);
@@ -814,31 +834,23 @@ async function sendPostRequest() {
                 const data = JSON.parse(xhr.responseText);
                 // Обрабатываем результат выполнения операции (data.newItem)
                 console.log(data.newItem);
-
+    
                 // Показываем уведомление пользователю
                 alert('Заявка успешно отправлена!');
+                showPostSuccessNotification();
             } else {
                 console.error('Ошибка при отправке запроса:', xhr.statusText);
-                // Показываем уведомление об ошибке
-                alert('Произошла ошибка при отправке запроса. Пожалуйста, попробуйте ещё раз.');
+                showErrorNotification(xhr.statusText);
             }
         };
         xhr.onerror = function () {
             console.error('Ошибка при отправке запроса:', xhr.statusText);
-            // Показываем уведомление об ошибке
-            alert('Произошла ошибка при отправке запроса. Пожалуйста, попробуйте ещё раз.');
+            showErrorNotification(xhr.statusText);
         };
         xhr.send(JSON.stringify(formData));
-    });
+    });    
 }
 
-// Вызовите функцию при нажатии на кнопку "Отправить"
-document.getElementById('view-order-btn').addEventListener('click', sendPostRequest);
 
-
-
-
-
-
-
+sendPostRequest();
 

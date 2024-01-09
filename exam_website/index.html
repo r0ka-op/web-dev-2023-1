@@ -13,20 +13,23 @@
     <!-- Шапка сайта -->
     <header class="bg-primary text-white text-center py-3">
         <div class="container">
-            <img src="http://placehold.it/50x50/" alt="Логотип" class="img-fluid">
-            <h1>Логотип</h1>
-            <nav class="navbar navbar-light bg-light">
-                <a class="navbar-brand" href="#">Главная</a>
-                <a class="navbar-brand" href="personal-account.html">Личный кабинет</a>
+            <div class="d-flex justify-content-start align-items-center">
+                <h1 class="mb-0 ms-3">Московские тропы</h1>
+            </div>
+            <nav class="navbar navbar-light bg-light mt-3">
+                <a class="navbar-brand ms-3" href="#">Главная</a>
+                <a class="navbar-brand ms-3" href="personal-account.html">Личный кабинет</a>
             </nav>
         </div>
     </header>
-
-
+    
     <!-- Область для всплывающих уведомлений -->
-    <div class="container mt-3" id="alerts">
-        <div class="alert alert-info" role="alert">
-            Важное уведомление!
+    <div class="container mt-4">
+        <div id="post-success-alert" class="alert alert-success fade" role="alert" style="display: none;">
+            Заявка успешно зарегистрирована!
+        </div>
+        <div id="error-alert" class="alert alert-danger fade" role="alert" style="display: none;">
+            Произошла ошибка: <span id="error-message"></span>
         </div>
     </div>
 
@@ -34,60 +37,47 @@
     <div class="container mt-3" id="description">
         <div class="row">
             <div class="col-md-6 text-center">
-                <img src="http://placehold.it/400x400/" alt="Изображение компании" class="img-fluid">
+                <img src="files/logo.jpg" alt="Изображение компании" width="400px" class="img-fluid">
             </div>
             <div class="col-md-6 text-center">
-                <h2>Название компании</h2>
-                <p>Описание компании и её деятельности.</p>
+                <h2>Московские тропы</h2>
+                <p>Московские тропы - это туристическая компания, которая предоставляет гидов по известным туристическим маршрутам Москвы. 
+                    Вы можете выбрать любой маршрут, который вас интересует, и насладиться увлекательной экскурсией с профессиональным и 
+                    дружелюбным гидом. Московские тропы помогут вам узнать больше о истории, культуре и достопримечательностях российской 
+                    столицы. Вы сможете посетить такие знаменитые места, как Красная площадь, Кремль, Собор Василия Блаженного, Большой 
+                    театр, Арбат и многое другое. Московские тропы - это лучший способ познакомиться с Москвой и получить незабываемые 
+                    впечатления!</p>
             </div>
         </div>
     </div>
     
-    <!-- Блок с информацией о достоинствах компании -->
-    <div class="container mt-3" id="advantages">
+    <div class="container mt-3 mb-4" id="advantages">
         <div class="row">
-            <div class="col-md-4" id="ad-title">
-                <h3>Заголовок</h3>
+            <div class="col-md-4 text-center" id="ad-title">
+                <h3>Достоинства</h3>
             </div>
         </div>
         <div class="row my-4"> 
-            <div class="col-sm" id="ad1">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>1</p>
+            <div class="col-md" id="ad1">
+                <img src="files/ad1.jpg" width="100px" class="mx-auto d-block mb-3">
+                <p class="text-center">Предлагаем <b>разнообразные</b> и <b>интересные маршруты по Москве</b></p>
             </div>
-            <div class="col-sm" id="ad2">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>2</p>
+            <div class="col-md" id="ad2">
+                <img src="files/ad2.jpg" width="100px" class="mx-auto d-block mb-3">
+                <p class="text-center">Работаем с <b>опытными</b> и <b>профессиональными</b> гидами</p>
             </div>
-            <div class="col-sm" id="ad3">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>3</p>
+            <div class="col-md" id="ad3">
+                <img src="files/ad3.jpg" width="100px" class="mx-auto d-block mb-3">
+                <p class="text-center">Обеспечиваем <b>высокое</b> качество и <b>безопасность</b> услуг</p>
             </div>
-            <div class="col-sm" id="ad4">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>4</p>
-            </div>
-        </div>
-        <div class="row my-4">
-            <div class="col-sm" id="ad5">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>5</p>
-            </div>
-            <div class="col-sm" id="ad6">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>6</p>
-            </div>
-            <div class="col-sm" id="ad7">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>7</p>
-            </div>
-            <div class="col-sm" id="ad8">
-                <img src="http://placehold.it/50x50/" class="mx-auto d-block">
-                <p>8</p>
+            <div class="col-md" id="ad4">
+                <img src="files/ad4.jpg" width="100px" class="mx-auto d-block mb-3">
+                <p class="text-center">Помогаем туристам <b>узнать</b> и <b>почувствовать</b> Москву</p>
             </div>
         </div>
     </div>
-
+    
+    
 
 
     <!-- Форма для поиска маршрутов -->
@@ -259,26 +249,26 @@
                 </div>
                 <div class="modal-body">
                     <!-- Добавленная форма для оформления заявки -->
-                    <form id="order-form">
+                    <div id="order-form" class="container">
                         <div class="form-group">
-                            <label for="routeName">Название маршрута:</label>
+                            <label for="routeName" class="form-label">Название маршрута:</label>
                             <input type="text" class="form-control" id="routeName" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="guideName">ФИО гида:</label>
+                            <label for="guideName" class="form-label">ФИО гида:</label>
                             <input type="text" class="form-control" id="guideName" readonly>
                         </div>
-                        <div class="form-row">
+                        <div class="row">
                             <div class="form-group col-md-4">
-                                <label for="excursionDate">Дата экскурсии:</label>
+                                <label for="excursionDate" class="form-label">Дата экскурсии:</label>
                                 <input type="date" class="form-control" id="excursionDate">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="excursionTime">Время начала:</label>
+                                <label for="excursionTime" class="form-label">Время начала:</label>
                                 <input type="time" class="form-control" id="excursionTime" min="09:00" max="23:00" step="1800">
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="excursionDuration">Длительность:</label>
+                                <label for="excursionDuration" class="form-label">Длительность:</label>
                                 <select class="form-control" id="excursionDuration" required>
                                     <option value="1">1 час</option>
                                     <option value="2">2 часа</option>
@@ -287,30 +277,30 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="groupSize">Количество человек в группе:</label>
-                            <input type="number" class="form-control" id="groupSize" required>
+                            <label for="groupSize" class="form-label">Количество человек в группе:</label>
+                            <input type="number" class="form-control" id="groupSize" min="1" max="20" required>
                         </div>
-
+                    
                         <!-- Дополнительные опции -->
                         <div class="form-group">
-                            <label>Дополнительные опции заказа:</label>
-                            <div class="form-group">
+                            <label class="form-label">Дополнительные опции заказа:</label>
+                            <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="discountCheckbox">
-                                <label for="discountCheckbox">Скидка для школьников и студентов</label>
+                                <label class="form-check-label" for="discountCheckbox">Скидка для школьников и студентов</label>
                             </div>
-                            <div class="form-group">
+                            <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="souvenirCheckbox">
-                                <label for="souvenirCheckbox">Тематические сувениры</label>
+                                <label class="form-check-label" for="souvenirCheckbox">Тематические сувениры</label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="totalCost">Итоговая стоимость:</label>
+                            <label for="totalCost" class="form-label">Итоговая стоимость:</label>
                             <input type="text" class="form-control" id="totalCost" readonly>
                         </div>
-                    </form>
+                    </div>                    
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="view-order-btn">Отправить</button>
+                    <button type="button" class="btn btn-primary" id="view-order-btn">Отправить</button>
                     <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" id="cancel-btn">Отменить</button>
                 </div>
             </div>
