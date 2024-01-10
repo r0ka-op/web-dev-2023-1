@@ -123,12 +123,6 @@ async function OrdersTable() {
             document.getElementById('discountCheckbox').checked = order.optionFirst;
             document.getElementById('souvenirCheckbox').checked = order.optionSecond;
 
-            // Делаем поля только для чтения
-            const formFields = document.querySelectorAll('#order-form input, #order-form select');
-            formFields.forEach(field => {
-                field.setAttribute('readonly', true);
-            });
-
             // Отображаем модальное окно
             $('#order-details-modal').modal('show');
         } catch (error) {

@@ -787,6 +787,17 @@ function showErrorNotification(message) {
     }, 5000);
 }
 
+// const formData = {
+//     date: document.getElementById('excursionDate').value,
+//     duration: parseInt(document.getElementById('excursionDuration').value),
+//     guide_id: parseInt(selectedData[1].id),
+//     optionFirst: document.getElementById('discountCheckbox').checked ? 1 : 0,
+//     optionSecond: document.getElementById('souvenirCheckbox').checked ? 1 : 0,
+//     persons: parseInt(document.getElementById('groupSize').value),
+//     price: Math.round(parseFloat(document.getElementById('totalCost').value)),
+//     route_id: parseInt(selectedData[0].id),
+//     time: document.getElementById('excursionTime').value
+// };
 
 // Функция для отправки POST-запроса
 async function sendPostRequest() {
@@ -795,38 +806,33 @@ async function sendPostRequest() {
         const formData = {
             date: document.getElementById('excursionDate').value,
             duration: parseInt(document.getElementById('excursionDuration').value),
-            guide_id: selectedData[1].id,
+            guide_id: parseInt(selectedData[1].id),
             optionFirst: document.getElementById('discountCheckbox').checked ? 1 : 0,
             optionSecond: document.getElementById('souvenirCheckbox').checked ? 1 : 0,
             persons: parseInt(document.getElementById('groupSize').value),
             price: Math.round(parseFloat(document.getElementById('totalCost').value)),
-            route_id: selectedData[0].id,
+            route_id: parseInt(selectedData[0].id),
             time: document.getElementById('excursionTime').value
         };
     
         // Отправляем POST-запрос
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                // Обрабатываем результат выполнения операции (data.newItem)
-                console.log(data.newItem);
-    
-                // Показываем уведомление пользователю
-                alert('Заявка успешно отправлена!');
-                showPostSuccessNotification();
-            } else {
-                console.error('Ошибка при отправке запроса:', xhr.statusText);
-                showErrorNotification(xhr.statusText);
-            }
-        };
-        xhr.onerror = function () {
-            console.error('Ошибка при отправке запроса:', xhr.statusText);
-            showErrorNotification(xhr.statusText);
-        };
-        xhr.send(JSON.stringify(formData));
+        fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.newItem);
+            
+            showPostSuccessNotification();
+        })
+        .catch(error => {
+            console.error('Ошибка при отправке запроса:', error);
+            showErrorNotification(error);
+        });
     });    
 }
 
