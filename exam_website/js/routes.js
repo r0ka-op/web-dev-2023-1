@@ -763,7 +763,7 @@ document.getElementById('souvenirCheckbox').addEventListener('click', calculateE
 
 // Функция для отображения уведомления об успешном оформлении заказа
 function showPostSuccessNotification() {
-    const successAlert = document.getElementById('зщые-success-alert');
+    const successAlert = document.getElementById('post-success-alert');
     successAlert.classList.remove('fade');
     successAlert.classList.add('show');
 
@@ -787,18 +787,6 @@ function showErrorNotification(message) {
     }, 5000);
 }
 
-// const formData = {
-//     date: document.getElementById('excursionDate').value,
-//     duration: parseInt(document.getElementById('excursionDuration').value),
-//     guide_id: parseInt(selectedData[1].id),
-//     optionFirst: document.getElementById('discountCheckbox').checked ? 1 : 0,
-//     optionSecond: document.getElementById('souvenirCheckbox').checked ? 1 : 0,
-//     persons: parseInt(document.getElementById('groupSize').value),
-//     price: Math.round(parseFloat(document.getElementById('totalCost').value)),
-//     route_id: parseInt(selectedData[0].id),
-//     time: document.getElementById('excursionTime').value
-// };
-
 // Функция для отправки POST-запроса
 async function sendPostRequest() {
     document.getElementById('view-order-btn').addEventListener('click', function() {
@@ -814,15 +802,18 @@ async function sendPostRequest() {
             route_id: parseInt(selectedData[0].id),
             time: document.getElementById('excursionTime').value
         };
-    
+                
+        console.log(formData);
+
         // Отправляем POST-запрос
         fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(formData)
+            body: new URLSearchParams(formData),
         })
+        
         .then(response => response.json())
         .then(data => {
             console.log(data.newItem);
