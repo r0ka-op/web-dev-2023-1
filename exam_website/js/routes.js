@@ -1,7 +1,11 @@
 const api_key = 'd01e7184-0896-49ea-986a-8320b70192fe'
 
 let selectedData = Array(2);
-selectedData[0] = JSON.parse(localStorage.getItem('selectedRoute'))[0];
+try {
+    selectedData[0] = JSON.parse(localStorage.getItem('selectedRoute'))[0];
+} catch (error) {
+    console.error('Ошибка при получении данных из localStorage:', error.message);
+}
 
 
 // Функция для получения данных с API
