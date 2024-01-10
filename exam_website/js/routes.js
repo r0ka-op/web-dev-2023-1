@@ -10,10 +10,7 @@ async function fetchData(urn) {
     
     console.log(url)
     try {
-        console.log("до url")
         const response = await fetch(url);
-
-        console.log("после url")
 
         if (!response.ok) {
             throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
@@ -557,7 +554,6 @@ async function guideTable() {
     // Функция для заполнения списка языков гидов
     function fillLanguagesSelect(guidesData) {
         const languageSelect = document.getElementById('language');
-        console.log(guidesData)
 
         // Очищаем текущее содержимое списка
         languageSelect.innerHTML = '';
@@ -581,10 +577,8 @@ async function guideTable() {
         // Добавляем обработчик события для изменения выбранного элемента
         languageSelect.addEventListener('change', function() {
             const selectedValue = languageSelect.value;
-            console.log(selectedValue)
             
             const filteredGuides = guidesData.find(guide => `language${guide.id}` === selectedValue);
-            console.log(filteredGuides)
             if (filteredGuides) {
                 console.log('Выбран объект:', filteredGuides);
                 fillGuidesTable([filteredGuides], rows, currentPage);
@@ -598,8 +592,6 @@ async function guideTable() {
     function handleLanguageSearch() {
         const option = document.getElementById('language');
         const optionText = option.textContent.toLowerCase();
-        console.log(option)
-        console.log(optionText)
 
         // Фильтрация данных по языку и названию
         const filteredGuides = guidesData.filter(guide =>
@@ -729,8 +721,6 @@ function calculateExcursionPrice() {
     const hasSouvenirs = souvenirCheckbox.checked;
     const numberOfVisitors = calculateVisitorsBonus(groupSize);
 
-    console.log(guideServiceCost, hoursNumber, isThisDayOff, isItMorning, isItEvening, numberOfVisitors)
-
     let price = guideServiceCost * hoursNumber * isThisDayOff + isItMorning + isItEvening + numberOfVisitors;
 
     // Скидка для школьников и студентов
@@ -806,14 +796,13 @@ async function sendPostRequest() {
             date: document.getElementById('excursionDate').value,
             duration: parseInt(document.getElementById('excursionDuration').value),
             guide_id: selectedData[1].id,
-            optionFirst: document.getElementById('discountCheckbox').checked,
-            optionSecond: document.getElementById('souvenirCheckbox').checked,
+            optionFirst: document.getElementById('discountCheckbox').checked ? 1 : 0,
+            optionSecond: document.getElementById('souvenirCheckbox').checked ? 1 : 0,
             persons: parseInt(document.getElementById('groupSize').value),
             price: Math.round(parseFloat(document.getElementById('totalCost').value)),
             route_id: selectedData[0].id,
             time: document.getElementById('excursionTime').value
         };
-        console.log(formData);
     
         // Отправляем POST-запрос
         const xhr = new XMLHttpRequest();

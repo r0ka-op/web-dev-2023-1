@@ -1,7 +1,7 @@
 const api_key = 'd01e7184-0896-49ea-986a-8320b70192fe'
 
 
-// Функция для выполнения HTTP-запроса
+// Функция для получения жанных о заказах
 async function fetchData() {
     try {
         const response = await fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders?api_key=${api_key}`);
@@ -18,7 +18,7 @@ async function fetchData() {
     }
 }
 
-// Функция для выполнения HTTP-запроса данных о маршруте
+// Функция для выполнения получения данных о маршруте
 async function fetchRoute(routeId) {
     const routeUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}?api_key=${api_key}`;
 
@@ -34,6 +34,25 @@ async function fetchRoute(routeId) {
         return routeData;
     } catch (error) {
         console.error('Ошибка при получении данных о маршруте:', error.message);
+    }
+}
+
+
+
+// Функция для получения данных о гидах по выбранному маршруту
+async function fetchGuides(routeId) {
+    try {
+        const response = await fetch(`http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/routes/${routeId}/guides?api_key=${api_key}`);
+
+        if (!response.ok) {
+            throw new Error(`Ошибка при запросе: ${response.status} ${response.statusText}`);
+        }
+
+        const guidesData = await response.json();
+        return guidesData;
+    } catch (error) {
+        console.error('Ошибка при получении данных о гидах:', error.message);
+        return [];
     }
 }
 
@@ -86,28 +105,56 @@ async function OrdersTable() {
     let currentPage = 1;
     let rows = 10;
 
-    // Функция для отображения модального окна с подробной информацией
-    function showModalDetails(order) {
-        // Здесь добавьте код для создания и отображения модального окна
-        // Используйте данные из объекта `order` для отображения подробной информации
-        console.log("Подробная информация:", order);
+    async function showModalDetails(order, routeName) {
+        try {
+            const guidesData = await fetchGuides(order.route_id);
+        
+            const guide = guidesData[0];
+            // Заполняем поля формы данными из объекта `order`, `routeName` и `guide`
+            document.getElementById('routeName').value = routeName;
+            document.getElementById('guideName').value = guide.name;
+            document.getElementById('excursionDate').value = order.date;
+            document.getElementById('excursionTime').value = order.time;
+            document.getElementById('excursionDuration').value = order.duration;
+            document.getElementById('groupSize').value = order.persons;
+            document.getElementById('totalCost').value = order.price;
+
+            // Устанавливаем состояние чекбоксов
+            document.getElementById('discountCheckbox').checked = order.optionFirst;
+            document.getElementById('souvenirCheckbox').checked = order.optionSecond;
+
+            // Делаем поля только для чтения
+            const formFields = document.querySelectorAll('#order-form input, #order-form select');
+            formFields.forEach(field => {
+                field.setAttribute('readonly', true);
+            });
+
+            // Отображаем модальное окно
+            $('#order-details-modal').modal('show');
+        } catch (error) {
+            console.error('Ошибка при получении данных о гидах:', error.message);
+        }
+        console.log("Просмотр:", order);
     }
+    
+
+
+
 
     // Функция для отображения модального окна редактирования
     function showModalEdit(order) {
-        // Здесь добавьте код для создания и отображения модального окна редактирования
-        // Используйте данные из объекта `order` для предзаполнения формы редактирования
         console.log("Редактирование:", order);
     }
 
+
+
+
+
     // Функция для отображения модального окна подтверждения удаления
     function showModalDelete(order) {
-        // Находим кнопку "Да" в модальном окне
         const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
 
-        // Добавляем обработчик события для кнопки "Да"
         confirmCancelBtn.addEventListener('click', async () => {
-            // Выполняем DELETE запрос к API
             const deleteUrl = `http://exam-2023-1-api.std-900.ist.mospolytech.ru/api/orders/${order.id}?api_key=${api_key}`;
             try {
                 const response = await fetch(deleteUrl, { method: 'DELETE' });
@@ -127,9 +174,11 @@ async function OrdersTable() {
             console.log("Удаление:", order);
         }
 
+
+
     async function fillOrdersTable(data) {
         const tableBody = document.getElementById('orders-table').getElementsByTagName('tbody')[0];
-        tableBody.innerHTML = ''; // Очищаем текущее содержимое таблицы
+        tableBody.innerHTML = '';
 
         // Ожидаем выполнения всех асинхронных запросов и получаем массив результатов
         const routeDataArray = await Promise.all(data.map(order => fetchRoute(order.route_id)));
@@ -144,7 +193,7 @@ async function OrdersTable() {
             const cellActions = row.insertCell(4);
 
             // Заполняем ячейки данными
-            cellNumber.textContent = index + 1;
+            cellNumber.textContent = route.id;
             cellRoute.textContent = route ? route.name : 'Н/Д';
             cellDate.textContent = order.date;
             cellPrice.textContent = order.price;
@@ -152,8 +201,10 @@ async function OrdersTable() {
             // Добавляем кнопки "Подробнее", "Редактировать" и "Удалить"
             const detailsButton = document.createElement('button');
             detailsButton.classList.add('btn', 'btn-primary', 'me-2');
+            detailsButton.setAttribute('data-bs-toggle', 'modal');
+            detailsButton.setAttribute('data-bs-target', '#view-order-modal');
             detailsButton.textContent = 'Подробнее';
-            detailsButton.addEventListener('click', () => showModalDetails(order));
+            detailsButton.addEventListener('click', () => showModalDetails(order, route.name));
             cellActions.appendChild(detailsButton);
 
             const editButton = document.createElement('button');
