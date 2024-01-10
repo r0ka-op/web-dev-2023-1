@@ -4,7 +4,7 @@ let selectedData = Array(2);
 try {
     selectedData[0] = JSON.parse(localStorage.getItem('selectedRoute'))[0];
 } catch (error) {
-    console.error('Ошибка при получении данных из localStorage:', error.message);
+    console.log();
 }
 
 
