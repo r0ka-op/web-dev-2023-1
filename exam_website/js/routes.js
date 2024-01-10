@@ -47,10 +47,8 @@ async function routeTable() {
         const paginatedData = arrData.slice(start, end);
 
 
-        // arrData.forEach((route) => {
-        //     // Заполняем список достопримечательностей
-        //     fillLandmarkSelect(arrData);
-        // });
+  
+        fillLandmarks(postsData);
 
         
         paginatedData.forEach((route) => {
@@ -171,7 +169,7 @@ async function routeTable() {
             row.classList.add('table-primary');
             selectedData = [selectedRoute];
             const chooseButton = row.querySelector('.choose-button');
-            chooseButton.classList.add('selectedBtn');
+            chooseButton.classList.add('btn-secondary');
             chooseButton.textContent = 'Выбрано';
             localStorage.setItem('selectedRoute', JSON.stringify(selectedData)); // Сохраняем выбранный маршрут в localStorage
             updateRouteNameInTitle();
@@ -273,45 +271,49 @@ async function routeTable() {
     }
 
 
-    // // Функция для заполнения списка достопримечательностей
-    // function fillLandmarkSelect(arrData) {
-    //     const landmarkSelect = document.getElementById('landmark');
 
-    //     // Очищаем текущее содержимое списка
-    //     landmarkSelect.innerHTML = '';
 
-    //     // Добавляем первый вариант "Поиск по достопримечательности"
-    //     const defaultOption = document.createElement('option');
-    //     defaultOption.value = '';
-    //     defaultOption.textContent = 'Поиск по достопримечательности';
-    //     landmarkSelect.appendChild(defaultOption);
 
-    //     const allLandmarks = new Set();
 
-    //     arrData.forEach(route => {
-    //         const landmarks = route.mainObject.split('- ');
-    //         console.log(landmarks)
-    //         landmarks.forEach(landmark => {
-    //             allLandmarks.add(landmark);
-    //         });
-    //     });
 
-    //     // console.log(allLandmarks)
-    //     const uniqueLandmarks = Array.from(allLandmarks);
-        
-    //     // Добавляем варианты достопримечательностей в список
-    //     arrData.forEach(route => {
-    //         const option = document.createElement('option');
-    //         option.value = `landmark${route.id - 1}`;
-    //         option.textContent = uniqueLandmarks;
-    //         landmarkSelect.appendChild(option);
-    //     });
-    // }
 
-    // Функция для обновления пагинации
-    function updatePagination() {
-        const paginationList = document.getElementById('pagination-list-routes');
-        paginationList.innerHTML = '';
+    
+    // Функция для заполнения списка достопримечательностей
+    function fillLandmarks(arrData) {
+        const landmarkSelect = document.getElementById('landmark');
+        landmarkSelect.innerHTML = '';
+
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Поиск по достопримечательности';
+        landmarkSelect.appendChild(defaultOption);
+
+        arrData.forEach(route => {
+            const option = document.createElement('option');
+            
+            const mainObjectParts = route.mainObject.split('-');
+
+            const selectedElement = mainObjectParts[0].trim();
+
+            option.value = `landmark${route.id - 1}`;
+            option.textContent = selectedElement;
+
+            landmarkSelect.appendChild(option);
+        });
+
+        // Добавляем обработчик события для изменения выбранного элемента
+        landmarkSelect.addEventListener('change', function() {
+            const selectedValue = landmarkSelect.value;
+
+            const filteredRoutes = arrData.find(route => `landmark${route.id - 1}` === selectedValue);
+
+            if (filteredRoutes) {
+                console.log('Выбран объект:', filteredRoutes);
+                fillRouteTable([filteredRoutes], rows, currentPage);
+                fillPagination([filteredRoutes], rows);
+                loadSelectedRouteOnPageLoad();
+            } 
+        });
     }
 
     // Функция для обработки ввода в текстовое поле поиска
@@ -330,13 +332,10 @@ async function routeTable() {
         loadSelectedRouteOnPageLoad();
     }
 
-    // Получаем ссылку на элемент select для выбора достопримечательности
-    const landmarkSelect = document.getElementById('landmark');
+ 
     // Получаем ссылку на текстовое поле
-    const searchInput = document.getElementById('route-name');
+    const searchInput = document.querySelector('#route-name');
 
-    // Добавляем событие на изменение значения в select
-    landmarkSelect.addEventListener('change', handleSearch);
     // Добавляем событие на изменение значения в текстовом поле
     searchInput.addEventListener('input', handleSearch);
         
@@ -520,6 +519,8 @@ async function guideTable() {
         const end = start + rowPerPage;
         const paginatedData = guidesData.slice(start, end);
 
+        fillLanguagesSelect(guidesData);
+
         paginatedData.forEach((guide) => {
             const row = document.createElement('tr');
             const photoCell = document.createElement('td');
@@ -553,26 +554,14 @@ async function guideTable() {
         });
     }
 
-
-
-    // Функция для получения уникальных языков из данных о гидах
-    function getUniqueLanguages(guidesData) {
-        const uniqueLanguages = new Set();
-
-        guidesData.forEach(guide => {
-            uniqueLanguages.add(guide.language);
-        });
-
-        return Array.from(uniqueLanguages);
-    }
-
     // Функция для заполнения списка языков гидов
     function fillLanguagesSelect(guidesData) {
         const languageSelect = document.getElementById('language');
-        const languages = getUniqueLanguages(guidesData);
+        console.log(guidesData)
 
         // Очищаем текущее содержимое списка
         languageSelect.innerHTML = '';
+        
 
         // Добавляем первый вариант "--Не выбрано--"
         const defaultOption = document.createElement('option');
@@ -582,11 +571,25 @@ async function guideTable() {
         languageSelect.appendChild(defaultOption);
 
         // Добавляем варианты языков в список
-        languages.forEach((language, index) => {
+        guidesData.forEach(guide => {
             const option = document.createElement('option');
-            option.value = `language${index + 1}`;
-            option.textContent = language;
+            option.value = `language${guide.id}`;
+            option.textContent = guide.language;
             languageSelect.appendChild(option);
+        });
+
+        // Добавляем обработчик события для изменения выбранного элемента
+        languageSelect.addEventListener('change', function() {
+            const selectedValue = languageSelect.value;
+            console.log(selectedValue)
+            
+            const filteredGuides = guidesData.find(guide => `language${guide.id}` === selectedValue);
+            console.log(filteredGuides)
+            if (filteredGuides) {
+                console.log('Выбран объект:', filteredGuides);
+                fillGuidesTable([filteredGuides], rows, currentPage);
+                fillGuidesPagination([filteredGuides], rows);
+            } 
         });
     }
      
@@ -643,20 +646,7 @@ async function guideTable() {
     experienceAtInput.addEventListener('input', handleExperienceSearch);
     experienceToInput.addEventListener('input', handleExperienceSearch);
 
-    // Добавление обработчика события на изменение значения в выпадающем списке
-    const languageSelect = document.getElementById('language');
-    languageSelect.addEventListener('change', handleLanguageSearch);
-
-    fillLanguagesSelect(guidesData);
-
-    // document.getElementById("view-order-btn").addEventListener("click", function() {
-    //     guidesData.forEach(guide => {
-    //         if (guideId == guide.id) {
-    //             calculateExcursionCost(guide.pricePerHour, selectedValue);
-    //         }
-    //     });
-        
-    // })
+    
 }
 
 
@@ -790,7 +780,7 @@ function showPostSuccessNotification() {
     setTimeout(() => {
         successAlert.classList.add('fade');
         successAlert.classList.remove('show');
-    }, 3000);
+    }, 5000);
 }
 
 // Функция для отображения уведомления об ошибке

@@ -49,7 +49,7 @@ function showDeleteSuccessNotification() {
     setTimeout(() => {
         successAlert.classList.add('fade');
         successAlert.classList.remove('show');
-    }, 3000);
+    }, 5000);
 }
 
 // Функция для отображения уведомления об успешном редактировании
@@ -61,7 +61,7 @@ function showEditSuccessNotification() {
     setTimeout(() => {
         successAlert.classList.add('fade');
         successAlert.classList.remove('show');
-    }, 3000);
+    }, 5000);
 }
 
 // Функция для отображения уведомления об ошибке

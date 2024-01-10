@@ -90,18 +90,18 @@
 
         
         <div class="row">
-            <div class="col-md-4" id="route-search">
-                <label class="sr-only" for="route-name">Название маршрута</label>
-                <input type="text" class="form-control mb-2" id="route-name" placeholder="Введите название маршрута">
+            <div class="col-md-4 mb-2" id="route-search">
+                <input type="text" class="form-control" id="route-name" placeholder="Введите название маршрута">
             </div>
             <div class="col-auto" id="route-list">
+                <label for="landmark" class="visually-hidden">Поиск по достопримечательности</label>
                 <select class="form-control" id="landmark">
-                    <option value="" disabled selected>Поиск по достопримечательности</option>  
-                        <!-- Здесь будут добавлены варианты достопримечательностей -->
+                    <option value="" disabled selected>Поиск по достопримечательности</option>
+                    <!-- Здесь будут добавлены варианты достопримечательностей -->
                 </select>
-                <label for="landmark"></label>
             </div>
         </div>
+        
         
         <div class="container">
             <div class="row">
@@ -159,15 +159,15 @@
                     <option value="language1">Язык 1</option>
                     <option value="language2">Язык 2</option>
                     <option value="language3">Язык 3</option>
-                </select>
-                <label for="guides"></label>
+                </select>       
             </div>
-            
+        </div>
+        <div class="row">            
             <div class="col-md-4 d-flex" id="guides-search-experience">
                 <label class="mb-0" for="experience"><span id="experience-title">Опыт&nbsp;работы:</span></label>
                 <div class="input-group">
-                    <input type="number" class="form-control mb-0" id="experience-at" placeholder="от">
-                    <input type="number" class="form-control mb-0" id="experience-to" placeholder="до">
+                    <input type="number" class="form-control" id="experience-at" placeholder="от">
+                    <input type="number" class="form-control" id="experience-to" placeholder="до">
                 </div>
             </div>  
         </div>
@@ -310,7 +310,7 @@
     <!-- Футер -->
     <footer class="bg-light text-center py-3 mt-3">
         <div class="container">
-            <p>Контактные данные</p>
+            <p>Контактные данные: Наврузов Р. А.</p>
         </div>
     </footer>
 
