@@ -193,7 +193,7 @@ async function OrdersTable() {
             const cellActions = row.insertCell(4);
 
             // Заполняем ячейки данными
-            cellNumber.textContent = route.id;
+            cellNumber.textContent = order.id;
             cellRoute.textContent = route ? route.name : 'Н/Д';
             cellDate.textContent = order.date;
             cellPrice.textContent = order.price;
